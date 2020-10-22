@@ -6,9 +6,19 @@
     <!--Unidad de persistencias. Se pueden tener mas de una.-->
     <persistence-unit name="UnidadPersistencia" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class></class>
+        <class>ACIACS.encapsulaciones.Empresa</class>
+        <class>ACIACS.encapsulaciones.Modulo</class>
+        <class>ACIACS.encapsulaciones.ModuloNormal</class>
+        <class>ACIACS.encapsulaciones.ModuloPrioridad</class>
+        <class>ACIACS.encapsulaciones.PersonaPrioritaria</class>
+        <class>ACIACS.encapsulaciones.QrAccesso</class>
+        <class>ACIACS.encapsulaciones.Sucursal</class>
+        <class>ACIACS.encapsulaciones.Testing</class>
+        <class>ACIACS.encapsulaciones.TestingPriority</class>
+        <class>ACIACS.encapsulaciones.Usuario</class>
+
         <properties>
-            <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/ACIACS-BD" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/ACIACS" />
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />
             <property name="javax.persistence.jdbc.user" value="sa" />
             <property name="javax.persistence.jdbc.password" value="" />
