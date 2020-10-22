@@ -16,20 +16,20 @@ public class PersonaPrioritaria {
     private String segundoNombre;
     @Column(name = "primer_Apellido")
     private String primerApellido;
-    @Column(name = "Segundo_Aprellido")
-    private String SegundoAprellido;
+    @Column(name = "Segundo_Apellido")
+    private String SegundoApellido;
     @OneToMany(mappedBy = "personaPrioritaria", fetch = FetchType.LAZY)
     private Set<QrAccesso> listaQrAccesso;
 
     public PersonaPrioritaria() {
     }
 
-    public PersonaPrioritaria(String cedula, String primerNombre, String segundoNombre, String primerApellido, String segundoAprellido) {
+    public PersonaPrioritaria(String cedula, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido) {
         this.cedula = cedula;
         this.primerNombre = primerNombre;
         this.segundoNombre = segundoNombre;
         this.primerApellido = primerApellido;
-        SegundoAprellido = segundoAprellido;
+        SegundoApellido = segundoApellido;
     }
 
     public String getId() {
@@ -72,12 +72,12 @@ public class PersonaPrioritaria {
         this.primerApellido = primerApellido;
     }
 
-    public String getSegundoAprellido() {
-        return SegundoAprellido;
+    public String getSegundoApellido() {
+        return SegundoApellido;
     }
 
-    public void setSegundoAprellido(String segundoAprellido) {
-        SegundoAprellido = segundoAprellido;
+    public void setSegundoApellido(String segundoApellido) {
+        SegundoApellido = segundoApellido;
     }
 
     public Set<QrAccesso> getListaQrAccesso() {
