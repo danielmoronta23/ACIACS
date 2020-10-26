@@ -5,6 +5,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @PrimaryKeyJoinColumn(referencedColumnName="id")
@@ -17,8 +18,8 @@ public class TestingPriority extends Testing implements Serializable {
     public TestingPriority() {
     }
 
-    public TestingPriority(boolean mascarilla, double temperatura, Persona persona) {
-        super(mascarilla, temperatura);
+    public TestingPriority(boolean mascarilla, double temperatura, Date fechaResgistro, Persona persona) {
+        super(mascarilla, temperatura, fechaResgistro);
         this.persona = persona;
     }
 

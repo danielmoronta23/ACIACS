@@ -18,9 +18,10 @@ public class Testing implements Serializable {
     public Testing() {
     }
 
-    public Testing(boolean mascarilla, double temperatura) {
+    public Testing(boolean mascarilla, double temperatura, Date fechaResgistro) {
         this.mascarilla = mascarilla;
         this.temperatura = temperatura;
+        this.fechaResgistro = fechaResgistro;
     }
 
     public String getId() {
