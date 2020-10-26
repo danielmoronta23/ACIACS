@@ -10,8 +10,8 @@
         <class>ACIACS.encapsulaciones.Modulo</class>
         <class>ACIACS.encapsulaciones.ModuloNormal</class>
         <class>ACIACS.encapsulaciones.ModuloPrioridad</class>
-        <class>ACIACS.encapsulaciones.PersonaPrioritaria</class>
-        <class>ACIACS.encapsulaciones.QrAccesso</class>
+        <class>ACIACS.encapsulaciones.Persona</class>
+        <class>ACIACS.encapsulaciones.ListaDeAccesso</class>
         <class>ACIACS.encapsulaciones.Sucursal</class>
         <class>ACIACS.encapsulaciones.Testing</class>
         <class>ACIACS.encapsulaciones.TestingPriority</class>

@@ -2,19 +2,17 @@ package ACIACS.encapsulaciones;
 
 import ACIACS.util.EstatusModulo;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
 @Entity
-@Table(name="Modulo_Normal")
 @PrimaryKeyJoinColumn(referencedColumnName="id")
+@Table(name="Modulo_Normal")
 public class ModuloNormal extends Modulo implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    @JoinColumn(name = "id_Modulo_Normal")
     @OneToMany
     private Set<Testing> listaTesting;
 

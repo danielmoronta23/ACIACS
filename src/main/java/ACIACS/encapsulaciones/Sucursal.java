@@ -11,16 +11,23 @@ public class Sucursal implements Serializable {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private String id;
    private Ubicacion ubicacion;
-   @OneToMany
+   @Column(name="personasDentro")
+   private int personasDentro;
+   @Column(name = "capacidad")
+   private int capacidad;
+   @OneToMany(mappedBy = "sucursal", fetch = FetchType.LAZY)
    private Set<Modulo> listaModulo;
 
    public Sucursal() {
 
    }
-   public Sucursal(Ubicacion ubicacion, Set<Modulo> listaModulo) {
+
+   public Sucursal(String id, Ubicacion ubicacion, int capacidad) {
+      this.id = id;
       this.ubicacion = ubicacion;
-      this.listaModulo = listaModulo;
+      this.capacidad = capacidad;
    }
+
    public String getId() {
       return id;
    }
@@ -43,5 +50,21 @@ public class Sucursal implements Serializable {
 
    public void setListaModulo(Set<Modulo> listaModulo) {
       this.listaModulo = listaModulo;
+   }
+
+   public int getPersonasDentro() {
+      return personasDentro;
+   }
+
+   public void setPersonasDentro(int personasDentro) {
+      this.personasDentro = personasDentro;
+   }
+
+   public int getCapacidad() {
+      return capacidad;
+   }
+
+   public void setCapacidad(int capacidad) {
+      this.capacidad = capacidad;
    }
 }

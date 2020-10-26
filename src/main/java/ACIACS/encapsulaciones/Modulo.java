@@ -12,6 +12,8 @@ public class Modulo implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
     private EstatusModulo estatus;
+    @ManyToOne
+    private Sucursal sucursal;
 
     public Modulo() {
     }
@@ -34,5 +36,13 @@ public class Modulo implements Serializable {
 
     public void setEstatus(EstatusModulo estatus) {
         this.estatus = estatus;
+    }
+
+    public Sucursal getSucursal() {
+        return sucursal;
+    }
+
+    public void setSucursal(Sucursal sucursal) {
+        this.sucursal = sucursal;
     }
 }

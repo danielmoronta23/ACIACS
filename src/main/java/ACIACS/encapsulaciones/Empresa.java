@@ -2,6 +2,7 @@ package ACIACS.encapsulaciones;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -12,17 +13,24 @@ public class Empresa implements Serializable {
     private String id;
     private String nombre;
     @OneToMany
-    @JoinColumn(name = "id_Sucursal")
+    @JoinColumn(name = "id_Empresa")
     private Set<Sucursal> listaSucursal;
     @OneToMany(mappedBy = "empresa", fetch = FetchType.LAZY)
     private Set<Usuario> listaUsuario;
+    private String descripcion;
+    @Column(name = "fecha_Ingreso")
+    private Date fechaIngreso;
 
     public Empresa() {
     }
-    public Empresa(String nombre, Set<Sucursal> listaSucursal) {
+
+
+    public Empresa(String nombre, Set<Sucursal> listaSucursal, String descripcion) {
         this.nombre = nombre;
         this.listaSucursal = listaSucursal;
+        this.descripcion = descripcion;
     }
+
 
     public String getId() {
         return id;
@@ -54,5 +62,13 @@ public class Empresa implements Serializable {
 
     public void setListaUsuario(Set<Usuario> listaUsuario) {
         this.listaUsuario = listaUsuario;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public Date getFechaIngreso() {
+        return fechaIngreso;
     }
 }

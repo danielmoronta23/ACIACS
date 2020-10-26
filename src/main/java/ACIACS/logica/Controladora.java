@@ -8,8 +8,8 @@ public class Controladora {
     private final ServicioModulo servicioModulo = new ServicioModulo();
     private final ServicioModuloNormal servicioModuloNormal = new ServicioModuloNormal();
     private final ServicioModuloPrioritario servicioModuloPrioritario = new ServicioModuloPrioritario();
-    private final ServicioPersonaPrioritaria servicioPersonaPrioritaria = new ServicioPersonaPrioritaria();
-    private final ServicioQrAccesso servicioQrAccesso = new ServicioQrAccesso();
+    private final ServicioPersona servicioPersona = new ServicioPersona();
+    private final ServicioListaDeAccesso servicioListaDeAccesso = new ServicioListaDeAccesso();
     private final ServicioSucursal servicioSucursal = new ServicioSucursal();
     private final ServicioTesting servicioTesting = new ServicioTesting();
     private final ServicioTestingPriority servicioTestingPriority = new ServicioTestingPriority();

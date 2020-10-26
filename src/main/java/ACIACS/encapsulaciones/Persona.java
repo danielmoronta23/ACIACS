@@ -4,11 +4,10 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "Persona_Prioritaria")
-public class PersonaPrioritaria {
+@Table(name = "Persona")
+public class Persona {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    @Column(name = "Cedula", length = 13)
     private String cedula;
     @Column(name = "primer_Nombre")
     private String primerNombre;
@@ -18,26 +17,18 @@ public class PersonaPrioritaria {
     private String primerApellido;
     @Column(name = "Segundo_Apellido")
     private String SegundoApellido;
-    @OneToMany(mappedBy = "personaPrioritaria", fetch = FetchType.LAZY)
-    private Set<QrAccesso> listaQrAccesso;
+    @OneToMany(mappedBy = "persona", fetch = FetchType.LAZY)
+    private Set<ListaDeAccesso> listaListaDeAccesso;
 
-    public PersonaPrioritaria() {
+    public Persona() {
     }
 
-    public PersonaPrioritaria(String cedula, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido) {
+    public Persona(String cedula, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido) {
         this.cedula = cedula;
         this.primerNombre = primerNombre;
         this.segundoNombre = segundoNombre;
         this.primerApellido = primerApellido;
         SegundoApellido = segundoApellido;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getCedula() {
@@ -80,11 +71,11 @@ public class PersonaPrioritaria {
         SegundoApellido = segundoApellido;
     }
 
-    public Set<QrAccesso> getListaQrAccesso() {
-        return listaQrAccesso;
+    public Set<ListaDeAccesso> getListaQrAccesso() {
+        return listaListaDeAccesso;
     }
 
-    public void setListaQrAccesso(Set<QrAccesso> listaQrAccesso) {
-        this.listaQrAccesso = listaQrAccesso;
+    public void setListaQrAccesso(Set<ListaDeAccesso> listaListaDeAccesso) {
+        this.listaListaDeAccesso = listaListaDeAccesso;
     }
 }

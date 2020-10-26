@@ -12,21 +12,21 @@ import java.io.Serializable;
 public class TestingPriority extends Testing implements Serializable {
     private static final long serialVersionUID = 1L;
     @OneToOne
-    private PersonaPrioritaria personaPrioritaria;
+    private Persona persona;
 
     public TestingPriority() {
     }
 
-    public TestingPriority(boolean mascarilla, double temperatura, PersonaPrioritaria personaPrioritaria) {
+    public TestingPriority(boolean mascarilla, double temperatura, Persona persona) {
         super(mascarilla, temperatura);
-        this.personaPrioritaria = personaPrioritaria;
+        this.persona = persona;
     }
 
-    public PersonaPrioritaria getPersonaPrioritaria() {
-        return personaPrioritaria;
+    public Persona getPersonaPrioritaria() {
+        return persona;
     }
 
-    public void setPersonaPrioritaria(PersonaPrioritaria personaPrioritaria) {
-        this.personaPrioritaria = personaPrioritaria;
+    public void setPersonaPrioritaria(Persona persona) {
+        this.persona = persona;
     }
 }

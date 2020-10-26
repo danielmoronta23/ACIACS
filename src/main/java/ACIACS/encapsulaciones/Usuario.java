@@ -2,10 +2,7 @@ package ACIACS.encapsulaciones;
 
 import ACIACS.util.RolUsuario;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -18,6 +15,9 @@ public class Usuario implements Serializable {
     private RolUsuario rolUsuario;
     @ManyToOne
     private Empresa empresa;
+    @JoinColumn(name ="id_persona")
+    @OneToOne
+    private Persona persona;
 
     public Usuario() {
     }
@@ -59,5 +59,13 @@ public class Usuario implements Serializable {
 
     public void setEmpresa(Empresa empresa) {
         this.empresa = empresa;
+    }
+
+    public Persona getPersona() {
+        return persona;
+    }
+
+    public void setPersona(Persona persona) {
+        this.persona = persona;
     }
 }
