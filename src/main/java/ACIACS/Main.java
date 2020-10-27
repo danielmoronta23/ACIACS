@@ -1,5 +1,6 @@
 package ACIACS;
 
+import ACIACS.controladores.ControladorSOAP;
 import ACIACS.logica.Controladora;
 import ACIACS.services.ConexionDB;
 import io.javalin.Javalin;
@@ -18,6 +19,7 @@ public class Main {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+      //  new ControladorSOAP(app).aplicarRutas();
         app.start(7000);
     }
 }

@@ -11,7 +11,7 @@ public class Sucursal implements Serializable {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private String id;
    private Ubicacion ubicacion;
-   @Column(name="personasDentro")
+   @Column(name="personas_Dentro")
    private int personasDentro;
    @Column(name = "capacidad")
    private int capacidad;

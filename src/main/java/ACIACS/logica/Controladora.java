@@ -1,5 +1,7 @@
 package ACIACS.logica;
 
+import ACIACS.encapsulaciones.Modulo;
+import ACIACS.encapsulaciones.Sucursal;
 import ACIACS.services.*;
 
 public class Controladora {
@@ -16,6 +18,7 @@ public class Controladora {
     private final ServicioUsuario servicioUsuario = new ServicioUsuario();
 
     private Controladora() {
+        consultarPersonaPrioridad("", "");
 
     }
 
@@ -28,5 +31,18 @@ public class Controladora {
 
     public static Controladora getControladora() {
         return controladora;
+    }
+
+    public Modulo buscarModulo(String idCodigo){
+        return servicioModulo.buscar(idCodigo);
+    }
+
+    public Sucursal buscarSucursal(String idSucursal) {
+        return servicioSucursal.buscar(idSucursal);
+    }
+
+    public boolean consultarPersonaPrioridad(String idPersona, String idEmpresa) {
+        return servicioListaDeAccesso.consultarPrioridad(idPersona, idEmpresa);
+
     }
 }
