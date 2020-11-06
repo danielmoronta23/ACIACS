@@ -47,4 +47,12 @@ public class Testing implements Serializable {
     public void setTemperatura(double temperatura) {
         this.temperatura = temperatura;
     }
+
+    public Date getFechaResgistro() {
+        return fechaResgistro;
+    }
+
+    public void setFechaResgistro(Date fechaResgistro) {
+        this.fechaResgistro = fechaResgistro;
+    }
 }

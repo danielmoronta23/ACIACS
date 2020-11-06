@@ -12,8 +12,7 @@ import java.util.Set;
 public class ModuloPrioridad extends Modulo implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @JoinColumn(name = "id_Modulo_Prioridad")
-    @OneToMany
+    @OneToMany(mappedBy = "moduloPrioridad", fetch = FetchType.LAZY)
     private Set<TestingPriority> listaTestingPriority;
 
     public ModuloPrioridad() {

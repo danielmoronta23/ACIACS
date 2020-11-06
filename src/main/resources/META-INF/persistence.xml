@@ -14,6 +14,7 @@
         <class>ACIACS.encapsulaciones.ListaDeAccesso</class>
         <class>ACIACS.encapsulaciones.Sucursal</class>
         <class>ACIACS.encapsulaciones.Testing</class>
+        <class>ACIACS.encapsulaciones.TestingNormal</class>
         <class>ACIACS.encapsulaciones.TestingPriority</class>
         <class>ACIACS.encapsulaciones.Usuario</class>
 

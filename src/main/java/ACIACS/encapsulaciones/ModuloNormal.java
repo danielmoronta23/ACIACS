@@ -12,24 +12,23 @@ import java.util.Set;
 public class ModuloNormal extends Modulo implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @JoinColumn(name = "id_Modulo_Normal")
-    @OneToMany
-    private Set<Testing> listaTesting;
+    @OneToMany(mappedBy = "moduloNormal", fetch = FetchType.LAZY)
+    private Set<TestingNormal> listaTesting;
 
     public ModuloNormal() {
         super();
     }
 
-    public ModuloNormal(EstatusModulo estatus, Sucursal sucursal, Set<Testing> listaTesting) {
+    public ModuloNormal(EstatusModulo estatus, Sucursal sucursal, Set<TestingNormal> listaTesting) {
         super(estatus, sucursal);
         this.listaTesting = listaTesting;
     }
 
-    public Set<Testing> getListaTesting() {
+    public Set<TestingNormal> getListaTesting() {
         return listaTesting;
     }
 
-    public void setListaTesting(Set<Testing> listaTesting) {
+    public void setListaTesting(Set<TestingNormal> listaTesting) {
         this.listaTesting = listaTesting;
     }
 }
