@@ -7,32 +7,33 @@ var ctx = document.getElementById("myBarChart");
 var myLineChart = new Chart(ctx, {
   type: 'bar',
   data: {
-    labels: ["January", "February", "March", "April", "May", "June"],
+    labels: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
     datasets: [{
-      label: "Revenue",
-      backgroundColor: "rgba(2,117,216,1)",
-      borderColor: "rgba(2,117,216,1)",
-      data: [4215, 5312, 6251, 7841, 9821, 14984],
-    }],
+      label:"Denegado",
+      backgroundColor: "#dc3545",
+      data: [2215, 2132, 3245, 3245, 4245, 6245,  8245]},{
+      label:"Aceptados",
+      backgroundColor: "#28a745",
+      data: [2215, 2334, 3245, 3245, 4245, 6245,  8245],}],
   },
   options: {
     scales: {
       xAxes: [{
         time: {
-          unit: 'month'
+          unit: 'Mes'
         },
         gridLines: {
           display: false
         },
         ticks: {
-          maxTicksLimit: 6
+          maxTicksLimit: 12
         }
       }],
       yAxes: [{
         ticks: {
           min: 0,
           max: 15000,
-          maxTicksLimit: 5
+          maxTicksLimit: 8
         },
         gridLines: {
           display: true
@@ -40,7 +41,7 @@ var myLineChart = new Chart(ctx, {
       }],
     },
     legend: {
-      display: false
+      display: true
     }
   }
 });
