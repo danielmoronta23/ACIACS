@@ -14,7 +14,15 @@ var myLineChart = new Chart(ctx, {
       data: [2215, 2132, 3245, 3245, 4245, 6245,  8245]},{
       label:"Aceptados",
       backgroundColor: "#28a745",
-      data: [2215, 2334, 3245, 3245, 4245, 6245,  8245],}],
+      data: [2215, 2334, 3245, 3245, 4245, 2245,  7245],},{
+        label:"Prioridad",
+        backgroundColor: "#0275d8",
+        data: [2215, 2334, 3245, 3245, 4245, 3245,  6245],
+    }, {
+        label:"Prioridad No Aceptados",
+        backgroundColor: "#FFCC33",
+        data: [2215, 2334, 3245, 3245, 4245, 6245,  2245],
+    }],
   },
   options: {
     scales: {
