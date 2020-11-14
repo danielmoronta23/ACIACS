@@ -32,7 +32,7 @@ public class Testing implements Serializable {
         this.id = id;
     }
 
-    public boolean isMascarilla() {
+    public boolean getMascarilla() {
         return mascarilla;
     }
 
