@@ -21,11 +21,9 @@ public class ApiRest extends ControladorBase {
                     ctx.header("Content-Type", "application/json");
                 });
                 get("/visitasPorHora/:id", ctx -> {
-                    controladora.datosPruebas();
                     ctx.json(controladora.pruebasRealizadasPorHora(ctx.pathParam("id", String.class).get()));
                 });
                 get("/visitasPorMeses/:id", ctx -> {
-                    controladora.datosPruebas();
                     ctx.json(controladora.estadisticaVisitasPorMeses(ctx.pathParam("id", String.class).get()));
                 });
             });

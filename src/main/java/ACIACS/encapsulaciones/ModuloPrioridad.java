@@ -19,6 +19,10 @@ public class ModuloPrioridad extends Modulo implements Serializable {
         super();
     }
 
+    public ModuloPrioridad(EstatusModulo estatus, Sucursal sucursal) {
+        super(estatus, sucursal);
+    }
+
     public ModuloPrioridad(EstatusModulo estatus, Sucursal sucursal, Set<TestingPriority> listaTestingPriority) {
         super(estatus, sucursal);
         this.listaTestingPriority = listaTestingPriority;

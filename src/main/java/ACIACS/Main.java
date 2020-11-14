@@ -7,6 +7,7 @@ import ACIACS.services.ConexionDB;
 import io.javalin.Javalin;
 
 import java.sql.SQLException;
+import java.text.ParseException;
 
 public class Main {
     public static void main(String[] args) {
@@ -16,8 +17,8 @@ public class Main {
         });
         try {
             ConexionDB.getInstance();
-            Controladora.getInstance(); //.crearDatosPorDefecto();
-        } catch (SQLException throwables) {
+            Controladora.getInstance().datosPruebas(); //.crearDatosPorDefecto();
+        } catch (SQLException | ParseException throwables) {
             throwables.printStackTrace();
         }
       //  new ControladorSOAP(app).aplicarRutas();

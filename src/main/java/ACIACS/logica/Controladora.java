@@ -85,15 +85,24 @@ public class Controladora {
         return servicioSucursal.pruebasRealizadasPorFecha(new Date(), sucursal);
     }
 
+    public boolean agregarPersona(Persona persona){
+        return servicioPersona.crear(persona);
+    }
     public void datosPruebas() throws ParseException {
         agregarEmpresa(new Empresa("PEPE", "PEPE"));
         agregarSucursal(new Sucursal(new Ubicacion(), 0, 100, buscarEmpresa("1")));
         agregarModulo(new ModuloNormal(EstatusModulo.Activo, buscarSucursal("1")));
+        agregarModulo(new ModuloPrioridad(EstatusModulo.Activo, buscarSucursal("1")));
+
         TestingNormal aux = new TestingNormal(false, 100, new Date(), servicioModuloNormal.buscar("1"));
         agregarTesting(aux);
         TestingNormal aux1 = new TestingNormal(false, 100, new Date(), servicioModuloNormal.buscar("1"));
         agregarTesting(aux1);
-        pruebasRealizadasPorHora("1");
+
+        Persona persona = new Persona("402-1409395-3","Daniel ", "","P","Moronta");
+        agregarPersona(persona);
+        TestingPriority aux2 = new TestingPriority(false, 39, new Date(), servicioPersona.buscar("402-1409395-3"), servicioModuloPrioritario.buscar("2"));
+        agregarTesting(aux2);
     }
 
     public EstadisticaVisitas pruebasRealizadasPorHora(String idSucursal) throws ParseException {
