@@ -1,5 +1,6 @@
 package ACIACS;
 
+import ACIACS.API.ApiRest;
 import ACIACS.controladores.ControladorSOAP;
 import ACIACS.logica.Controladora;
 import ACIACS.services.ConexionDB;
@@ -20,6 +21,7 @@ public class Main {
             throwables.printStackTrace();
         }
       //  new ControladorSOAP(app).aplicarRutas();
+        new ApiRest(app).aplicarRutas();
         app.start(7000);
     }
 }

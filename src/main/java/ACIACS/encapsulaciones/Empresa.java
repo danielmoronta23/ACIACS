@@ -12,8 +12,7 @@ public class Empresa implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
     private String nombre;
-    @OneToMany
-    @JoinColumn(name = "id_Empresa")
+    @OneToMany(mappedBy = "empresa")
     private Set<Sucursal> listaSucursal;
     @OneToMany(mappedBy = "empresa", fetch = FetchType.LAZY)
     private Set<Usuario> listaUsuario;
@@ -23,6 +22,11 @@ public class Empresa implements Serializable {
 
     public Empresa() {
     }
+    public Empresa(String nombre, String descripcion) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+    }
+
 
 
     public Empresa(String nombre, Set<Sucursal> listaSucursal, String descripcion) {

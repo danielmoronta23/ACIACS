@@ -2,6 +2,16 @@ package ACIACS.logica;
 
 import ACIACS.encapsulaciones.*;
 import ACIACS.services.*;
+import ACIACS.util.EstadisticaVisitas;
+import ACIACS.util.EstatusModulo;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Controladora {
     private static Controladora controladora;
@@ -18,8 +28,6 @@ public class Controladora {
     private final ServicioUsuario servicioUsuario = new ServicioUsuario();
 
     private Controladora() {
-        consultarPersonaPrioridad("", "");
-
     }
 
     public static Controladora getInstance() {
@@ -46,13 +54,158 @@ public class Controladora {
     }
 
     public Empresa buscarEmpresaBySucursal(String sucursal) {
-       return servicioEmpresa.buscarEmpresPorSucursal(sucursal);
+        return servicioEmpresa.buscarEmpresPorSucursal(sucursal);
     }
-    public boolean agregarTesting(Testing testing){
+
+    public boolean agregarTesting(Testing testing) {
         return servicioTesting.crear(testing);
     }
 
     public boolean actualizarSucursal(Sucursal sucursal) {
-       return servicioSucursal.editar(sucursal);
+        return servicioSucursal.editar(sucursal);
     }
+
+    public boolean agregarModulo(Modulo modulo) {
+        return servicioModulo.crear(modulo);
+    }
+
+    public boolean agregarEmpresa(Empresa empresa) {
+        return servicioEmpresa.crear(empresa);
+    }
+
+    public boolean agregarSucursal(Sucursal sucursal) {
+        return servicioSucursal.crear(sucursal);
+    }
+
+    public Empresa buscarEmpresa(String id) {
+        return servicioEmpresa.buscar(id);
+    }
+
+    private List<Testing> pruebasRealizadasHoy(String sucursal) throws ParseException {
+        return servicioSucursal.pruebasRealizadasPorFecha(new Date(), sucursal);
+    }
+
+    public void datosPruebas() throws ParseException {
+        agregarEmpresa(new Empresa("PEPE", "PEPE"));
+        agregarSucursal(new Sucursal(new Ubicacion(), 0, 100, buscarEmpresa("1")));
+        agregarModulo(new ModuloNormal(EstatusModulo.Activo, buscarSucursal("1")));
+        TestingNormal aux = new TestingNormal(false, 100, new Date(), servicioModuloNormal.buscar("1"));
+        agregarTesting(aux);
+        TestingNormal aux1 = new TestingNormal(false, 100, new Date(), servicioModuloNormal.buscar("1"));
+        agregarTesting(aux1);
+        pruebasRealizadasPorHora("1");
+    }
+
+    public EstadisticaVisitas pruebasRealizadasPorHora(String idSucursal) throws ParseException {
+        int[] visitaNormalesAceptadas = new int[24];
+        int visitaNormalesAceptadasTotal = 0;
+        int[] visitaNormalesDenegadas = new int[24];
+        int visitaNormalesDenegadasTotal = 0;
+        int[] visitaPrioritariaAceptada = new int[24];
+        int visitaPrioritariaAceptadaTotal = 0;
+        int[] visitaPrioritariaDenegada = new int[24];
+        int visitaPrioritariaDenegadaTotal = 0;
+        DateFormat hourFormat = new SimpleDateFormat("HH");
+        int i;
+        for (Testing t : pruebasRealizadasHoy(idSucursal)) {
+            i = Integer.parseInt(hourFormat.format(t.getFechaResgistro()));
+            if (t instanceof TestingNormal) {
+                if (verificarTesting(t)) {
+                    visitaNormalesAceptadas[i] += 1;
+                    visitaNormalesAceptadasTotal += 1;
+                } else {
+                    visitaNormalesDenegadas[i] += 1;
+                    visitaNormalesDenegadasTotal += 1;
+                }
+            } else if (t instanceof TestingPriority) {
+                if (verificarTesting(t)) {
+                    visitaPrioritariaAceptada[i] += 1;
+                    visitaPrioritariaAceptadaTotal += 1;
+
+                } else {
+                    visitaPrioritariaDenegada[i] += 1;
+                    visitaPrioritariaDenegadaTotal += 1;
+                }
+            }
+        }
+
+        Map<String, Object> visitaNormalesAceptadas1 = new HashMap();
+        visitaNormalesAceptadas1.put("Total", visitaNormalesAceptadasTotal);
+        visitaNormalesAceptadas1.put("PorHora", visitaNormalesAceptadas);
+
+        Map<String, Object> visitaNormalesDenegadas1 = new HashMap();
+        visitaNormalesDenegadas1.put("Total", visitaNormalesDenegadasTotal);
+        visitaNormalesDenegadas1.put("PorHora", visitaNormalesDenegadas);
+
+        Map<String, Object> visitaPrioritariaAceptada1 = new HashMap();
+        visitaPrioritariaAceptada1.put("Total", visitaPrioritariaAceptadaTotal);
+        visitaPrioritariaAceptada1.put("PorHora", visitaPrioritariaAceptada);
+
+        Map<String, Object> visitaPrioritariaDenegada1 = new HashMap();
+        visitaPrioritariaDenegada1.put("Total", visitaPrioritariaDenegadaTotal);
+        visitaPrioritariaDenegada1.put("PorHora", visitaPrioritariaDenegada);
+        return new EstadisticaVisitas(visitaNormalesAceptadas1, visitaNormalesDenegadas1, visitaPrioritariaAceptada1, visitaPrioritariaDenegada1);
+
+    }
+
+    public boolean verificarTesting(Testing testing) {
+        if (testing.getTemperatura() > 38 || testing.getMascarilla() == false) {
+            return false;
+        }
+        return true;
+
+    }
+
+    public EstadisticaVisitas estadisticaVisitasPorMeses(String idSucursal) throws ParseException {
+        int[] visitaNormalesAceptadas = new int[12];
+        int visitaNormalesAceptadasTotal = 0;
+        int[] visitaNormalesDenegadas = new int[12];
+        int visitaNormalesDenegadasTotal = 0;
+        int[] visitaPrioritariaAceptada = new int[12];
+        int visitaPrioritariaAceptadaTotal = 0;
+        int[] visitaPrioritariaDenegada = new int[12];
+        int visitaPrioritariaDenegadaTotal = 0;
+        DateFormat hourFormat = new SimpleDateFormat("MM");
+        int i;
+        for (Testing t : servicioSucursal.pruebasRealizadasPorMensuales(new Date(), idSucursal)) {
+            i = Integer.parseInt(hourFormat.format(t.getFechaResgistro()));
+            if (t instanceof TestingNormal) {
+                if (verificarTesting(t)) {
+                    visitaNormalesAceptadas[i - 1] += 1;
+                    visitaNormalesAceptadasTotal += 1;
+                } else {
+                    visitaNormalesDenegadas[i - 1] += 1;
+                    visitaNormalesDenegadasTotal += 1;
+                }
+            } else if (t instanceof TestingPriority) {
+                if (verificarTesting(t)) {
+                    visitaPrioritariaAceptada[i - 1] += 1;
+                    visitaPrioritariaAceptadaTotal += 1;
+
+                } else {
+                    visitaPrioritariaDenegada[i - 1] += 1;
+                    visitaPrioritariaDenegadaTotal += 1;
+                }
+            }
+        }
+
+        Map<String, Object> visitaNormalesAceptadas1 = new HashMap();
+        visitaNormalesAceptadas1.put("Total", visitaNormalesAceptadasTotal);
+        visitaNormalesAceptadas1.put("PorMes", visitaNormalesAceptadas);
+
+        Map<String, Object> visitaNormalesDenegadas1 = new HashMap();
+        visitaNormalesDenegadas1.put("Total", visitaNormalesDenegadasTotal);
+        visitaNormalesDenegadas1.put("PorMes", visitaNormalesDenegadas);
+
+        Map<String, Object> visitaPrioritariaAceptada1 = new HashMap();
+        visitaPrioritariaAceptada1.put("Total", visitaPrioritariaAceptadaTotal);
+        visitaPrioritariaAceptada1.put("PorMes", visitaPrioritariaAceptada);
+
+        Map<String, Object> visitaPrioritariaDenegada1 = new HashMap();
+        visitaPrioritariaDenegada1.put("Total", visitaPrioritariaDenegadaTotal);
+        visitaPrioritariaDenegada1.put("PorMes", visitaPrioritariaDenegada);
+        return new EstadisticaVisitas(visitaNormalesAceptadas1, visitaNormalesDenegadas1, visitaPrioritariaAceptada1, visitaPrioritariaDenegada1);
+
+    }
+
 }

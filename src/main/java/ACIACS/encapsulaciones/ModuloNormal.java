@@ -18,6 +18,9 @@ public class ModuloNormal extends Modulo implements Serializable {
     public ModuloNormal() {
         super();
     }
+    public ModuloNormal(EstatusModulo estatus, Sucursal sucursal) {
+        super(estatus, sucursal);
+    }
 
     public ModuloNormal(EstatusModulo estatus, Sucursal sucursal, Set<TestingNormal> listaTesting) {
         super(estatus, sucursal);

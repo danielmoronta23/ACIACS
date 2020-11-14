@@ -17,9 +17,17 @@ public class Sucursal implements Serializable {
    private int capacidad;
    @OneToMany(mappedBy = "sucursal", fetch = FetchType.LAZY)
    private Set<Modulo> listaModulo;
+   @ManyToOne
+   private Empresa empresa;
 
    public Sucursal() {
 
+   }
+   public Sucursal(Ubicacion ubicacion, int personasDentro, int capacidad, Empresa empresa) {
+      this.ubicacion = ubicacion;
+      this.personasDentro = personasDentro;
+      this.capacidad = capacidad;
+      this.empresa = empresa;
    }
 
    public Sucursal(String id, Ubicacion ubicacion, int capacidad) {
@@ -66,5 +74,13 @@ public class Sucursal implements Serializable {
 
    public void setCapacidad(int capacidad) {
       this.capacidad = capacidad;
+   }
+
+   public Empresa getEmpresa() {
+      return empresa;
+   }
+
+   public void setEmpresa(Empresa empresa) {
+      this.empresa = empresa;
    }
 }
