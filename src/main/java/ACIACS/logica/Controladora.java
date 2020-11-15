@@ -88,6 +88,18 @@ public class Controladora {
     public boolean agregarPersona(Persona persona){
         return servicioPersona.crear(persona);
     }
+    public boolean editarPersona(Persona persona){
+        return servicioPersona.editar(persona);
+    }
+    public boolean autenticarUsuario(String correo, String passowerd){
+        Usuario aux = servicioUsuario.buscar(correo);
+        if(aux!=null){
+            if(aux.getPassword().equals(passowerd)){
+                return true;
+            }
+        }
+        return false;
+    }
     public void datosPruebas() throws ParseException {
         agregarEmpresa(new Empresa("PEPE", "PEPE"));
         agregarSucursal(new Sucursal(new Ubicacion(), 0, 100, buscarEmpresa("1")));
@@ -217,4 +229,14 @@ public class Controladora {
 
     }
 
+    public List<Sucursal> listaSucursalesPorEmpresa(String empresa){
+        Empresa aux = servicioEmpresa.buscar(empresa);
+        if(aux!=null){
+            return (List<Sucursal>) aux.getListaSucursal();
+        }
+        return null;
+    }
+    public List<Empresa> listaEmpresas(){
+        return servicioEmpresa.explorarTodo();
+    }
 }

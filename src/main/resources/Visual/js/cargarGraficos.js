@@ -32,13 +32,13 @@ function cargarGraficaVisitasPorHora(visitasNoramalesAceptadas, visitaNormalesDe
     let vND = [];
     let vPA = [];
     let vPD = [];
-    let contador=0;
+    let contador = 0;
     for (let i = inicio; i <= fin; i++) {
         vNA[contador] = visitasNoramalesAceptadas[i];
         vND[contador] = visitaNormalesDenegadas[i];
         vPA[contador] = visitasPrioritariaAceptada[i];
         vPD[contador] = visitasPrioritariaDenegada[i];
-        contador=contador+1;
+        contador = contador + 1;
     }
     var VisitasNormalesRealizadas = new Chart(ctx, {
         type: 'line',
@@ -182,27 +182,110 @@ function cargarTotalesDeVisitas(a, b, c, d) {
 }
 
 function cargarDatosDesdeAPI() {
-    let estadistica = "";
+    let estadisticas = "";
+    let estadisticaHoy = "";
+    let estadisticaMensual = "";
     let idSucursal = "1";
-    let endpoint = "visitasPorHora"
+    let endpoint = "estadisticas"
     const Http = new XMLHttpRequest();
     const url = 'http://localhost:7000/api-Rest/' + endpoint + "/" + idSucursal;
     Http.open("GET", url);
     Http.send();
     Http.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
-            estadistica = JSON.parse(Http.responseText);
-            cargarTotalesDeVisitas(estadistica.visitasNormalesAceptadas.Total, estadistica.visitasNormalesDenegadas.Total, estadistica.visitasPrioritariaAceptada.Total, estadistica.visitasPrioritariaDenegada.Total)
-            cargarGraficaVisitasPorHora(estadistica.visitasNormalesAceptadas.PorHora, estadistica.visitasNormalesDenegadas.PorHora, estadistica.visitasPrioritariaAceptada.PorHora, estadistica.visitasPrioritariaDenegada.PorHora);
+            estadisticas = JSON.parse(Http.responseText);
+            estadisticaHoy = estadisticas[0];
+            estadisticaMensual = estadisticas[1];
+            cargarTotalesDeVisitas(estadisticaHoy.visitasNormalesAceptadas.Total, estadisticaHoy.visitasNormalesDenegadas.Total, estadisticaHoy.visitasPrioritariaAceptada.Total, estadisticaHoy.visitasPrioritariaDenegada.Total)
+            cargarGraficaVisitasPorHora(estadisticaHoy.visitasNormalesAceptadas.PorHora, estadisticaHoy.visitasNormalesDenegadas.PorHora, estadisticaHoy.visitasPrioritariaAceptada.PorHora, estadisticaHoy.visitasPrioritariaDenegada.PorHora);
+            cargarGraficaMensual(estadisticaMensual.visitasNormalesAceptadas.PorMes, estadisticaMensual.visitasNormalesDenegadas.PorMes, estadisticaMensual.visitasPrioritariaAceptada.PorMes, estadisticaMensual.visitasPrioritariaDenegada.PorMes);
+
         }
 
     }
 }
 
-$( document ).ready(function() {
-    console.log( "ready!" );
+function cargarGraficaMensual(visitasNoramalesAceptadas, visitaNormalesDenegadas, visitasPrioritariaAceptada, visitasPrioritariaDenegada) {
+    let maximoVisitasNormales = 0;
+    let maximoVisitasPrioritaria = 0
+    let maximo = 0;
+    if (Math.max.apply(null, visitasNoramalesAceptadas) > Math.max.apply(null, visitaNormalesDenegadas)) {
+        maximoVisitasNormales = Math.max.apply(null, visitasNoramalesAceptadas);
+    } else {
+        maximoVisitasNormales = Math.max.apply(null, visitaNormalesDenegadas);
+    }
+
+    if (Math.max.apply(null, visitasPrioritariaAceptada) > Math.max.apply(null, visitasPrioritariaDenegada)) {
+        maximoVisitasPrioritaria = Math.max.apply(null, visitasPrioritariaAceptada);
+    } else {
+        maximoVisitasPrioritaria = Math.max.apply(null, visitasPrioritariaAceptada);
+    }
+    if (maximoVisitasNormales > maximoVisitasPrioritaria) {
+        maximo = maximoVisitasNormales;
+    } else {
+        maximo = maximoVisitasPrioritaria
+    }
+
+    var ctx = document.getElementById("myBarChart");
+    var myLineChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+            datasets: [{
+                label: "Denegada",
+                backgroundColor: "#dc3545",
+                data: visitaNormalesDenegadas
+            }, {
+                label: "Aceptada",
+                backgroundColor: "#28a745",
+                data: visitasNoramalesAceptadas,
+            }, {
+                label: "Prioridad Aceptada",
+                backgroundColor: "#0275d8",
+                data: visitasPrioritariaAceptada,
+            }, {
+                label: "Prioridad Denegada",
+                backgroundColor: "#FFCC33",
+                data: visitasPrioritariaDenegada,
+            }],
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    time: {
+                        unit: 'Mes'
+                    },
+                    gridLines: {
+                        display: false
+                    },
+                    ticks: {
+                        maxTicksLimit: 12
+                    }
+                }],
+                yAxes: [{
+                    ticks: {
+                        min: 0,
+                        max: maximo,
+                        maxTicksLimit: 8
+                    },
+                    gridLines: {
+                        display: true
+                    }
+                }],
+            },
+            legend: {
+                display: true
+            }
+        }
+    });
+
+}
+
+$(document).ready(function () {
+    console.log("ready!");
     cargarDatosDesdeAPI();
 });
-function actualizarDatos(){
+
+function actualizarDatos() {
     cargarDatosDesdeAPI();
 }
