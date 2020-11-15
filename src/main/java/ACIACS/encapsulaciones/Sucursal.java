@@ -34,6 +34,7 @@ public class Sucursal implements Serializable {
       this.id = id;
       this.ubicacion = ubicacion;
       this.capacidad = capacidad;
+      this.personasDentro = 0;
    }
 
    public String getId() {

@@ -182,6 +182,7 @@ function cargarTotalesDeVisitas(a, b, c, d) {
 }
 
 function cargarDatosDesdeAPI() {
+    let pro = "";
     let estadisticas = "";
     let estadisticaHoy = "";
     let estadisticaMensual = "";
@@ -196,10 +197,11 @@ function cargarDatosDesdeAPI() {
             estadisticas = JSON.parse(Http.responseText);
             estadisticaHoy = estadisticas[0];
             estadisticaMensual = estadisticas[1];
+            pro = estadisticas[2];
             cargarTotalesDeVisitas(estadisticaHoy.visitasNormalesAceptadas.Total, estadisticaHoy.visitasNormalesDenegadas.Total, estadisticaHoy.visitasPrioritariaAceptada.Total, estadisticaHoy.visitasPrioritariaDenegada.Total)
             cargarGraficaVisitasPorHora(estadisticaHoy.visitasNormalesAceptadas.PorHora, estadisticaHoy.visitasNormalesDenegadas.PorHora, estadisticaHoy.visitasPrioritariaAceptada.PorHora, estadisticaHoy.visitasPrioritariaDenegada.PorHora);
             cargarGraficaMensual(estadisticaMensual.visitasNormalesAceptadas.PorMes, estadisticaMensual.visitasNormalesDenegadas.PorMes, estadisticaMensual.visitasPrioritariaAceptada.PorMes, estadisticaMensual.visitasPrioritariaDenegada.PorMes);
-
+            cargarProgressBar(pro[0], pro[1]);
         }
 
     }
@@ -279,6 +281,20 @@ function cargarGraficaMensual(visitasNoramalesAceptadas, visitaNormalesDenegadas
         }
     });
 
+}
+
+function cargarProgressBar(capacidad, dentro) {
+    let porcentaje = 0;
+    if (dentro > 0) {
+        porcentaje = ((capacidad - dentro) / capacidad) * 100;
+    }
+    // (capacidad-dentro)/dentro
+    let pbarDentro = document.getElementById("pbarDentro");
+    let pbarlibre = document.getElementById("pbarlibre");
+    pbarDentro.style.width = 100 - porcentaje + "%";
+    pbarDentro.innerText = dentro;
+    pbarlibre.style.width = porcentaje + "%";
+    pbarlibre.innerText = capacidad - dentro;
 }
 
 $(document).ready(function () {

@@ -115,6 +115,9 @@ public class Controladora {
         agregarPersona(persona);
         TestingPriority aux2 = new TestingPriority(false, 39, new Date(), servicioPersona.buscar("402-1409395-3"), servicioModuloPrioritario.buscar("2"));
         agregarTesting(aux2);
+        Sucursal sucursal = buscarSucursal("1");
+        sucursal.setPersonasDentro(20);
+        actualizarSucursal(sucursal);
     }
 
     public EstadisticaVisitas pruebasRealizadasPorHora(String idSucursal) throws ParseException {
@@ -239,4 +242,16 @@ public class Controladora {
     public List<Empresa> listaEmpresas(){
         return servicioEmpresa.explorarTodo();
     }
+    public Object cantidadDePersonaEnSucursal(String idSucursal){
+        int[] cant = new int[2];
+
+        Sucursal sucursal = servicioSucursal.buscar(idSucursal);
+        if(sucursal!=null) {
+            cant[0] = sucursal.getCapacidad();
+            cant[1] = sucursal.getPersonasDentro();
+
+        }
+        return cant;
+    }
 }
+

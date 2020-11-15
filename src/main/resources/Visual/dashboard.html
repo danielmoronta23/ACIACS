@@ -136,11 +136,11 @@
                             <div class="card-body">
                                 <div class="container">
                                     <div class="progress">
-                                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning"
+                                        <div id="pbarDentro" class="progress-bar progress-bar-striped progress-bar-animated bg-warning"
                                              role="progressbar" aria-valuenow="75" aria-valuemin="0"
                                              aria-valuemax="100" style="width: 75%"><i
                                                 class="font-weight-bold text-black-50">190</i></div>
-                                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+                                        <div id="pbarlibre" class="progress-bar progress-bar-striped progress-bar-animated bg-success"
                                              role="progressbar" aria-valuenow="25" aria-valuemin="0"
                                              aria-valuemax="100" style="width: 25%"><i class="font-weight-bold ">63</i>
                                         </div>
@@ -159,7 +159,7 @@
                         <div class="card border-left-success shadow h-100">
                             <div class="card-body">
                                 <div class="text-xs  font-weight-bold text-success text-uppercase mb-1">
-                                    Permitidos
+                                    Visitas Normales Permitidas hoy
                                 </div>
                                 <div class="h5 mb-0  font-weight-bold" id="TotalPermitidos"></div>
                             </div>
@@ -171,7 +171,7 @@
                         <div class="card border-left-danger shadow h-100">
                             <div class="card-body">
                                 <div class="text-xs font-weight-bold  text-danger text-uppercase mb-1">
-                                    Denegadas
+                                    Visitas Normales Denegadas hoy
                                 </div>
                                 <div class="h5 mb-0  font-weight-bold " id="totalDenegadas"></div>
                             </div>
@@ -182,8 +182,8 @@
                     <div class="col-xl-3 col-md-6 mb-4">
                         <div class="card border-left-primary shadow h-100">
                             <div class="card-body">
-                                <div class="text-xs font-weight-bold  text-primary text-uppercase mb-1">Prioridad
-                                    Permitidos
+                                <div class="text-xs font-weight-bold  text-primary text-uppercase mb-1">
+                                    Visitas Proritaria Permitida hoy
                                 </div>
                                 <div class="h5 mb-0 font-weight-bold " id="TotalPrioridadPermitidos"></div>
                             </div>
@@ -195,7 +195,7 @@
                         <div class="card border-left-warning shadow h-100">
                             <div class="card-body">
                                 <div class="text-xs  font-weight-bold text-warning text-uppercase mb-1">
-                                    Prioridad Denegados
+                                    Visitas Proritaria Denegadas hoy
                                 </div>
                                 <div class="h5 mb-0 font-weight-bold " id="TotalPrioridadDenegados"></div>
                             </div>
