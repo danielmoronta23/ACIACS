@@ -1,5 +1,6 @@
 package ACIACS.API;
 
+import ACIACS.DTO.DtoPersona;
 import ACIACS.logica.Controladora;
 import ACIACS.util.ControladorBase;
 import io.javalin.Javalin;
@@ -33,6 +34,17 @@ public class ApiRest extends ControladorBase {
                     estadisticas[1] = controladora.estadisticaVisitasPorMeses(ctx.pathParam("id", String.class).get());
                     estadisticas[2] = controladora.cantidadDePersonaEnSucursal(ctx.pathParam("id", String.class).get());
                     ctx.json(estadisticas);
+                });
+                get("/buscarPersona/:id", ctx -> {
+                    Object a[] = new Object[2];
+                    DtoPersona b = controladora.buscarPersonaDTO(ctx.pathParam("id", String.class).get());
+                    if(b!=null){
+                        a[1] =  b;
+                        a[0] = true;
+                    }else{
+                        a[0] = false;
+                    }
+                    ctx.json(a);
                 });
             });
         });

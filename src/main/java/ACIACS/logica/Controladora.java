@@ -1,5 +1,6 @@
 package ACIACS.logica;
 
+import ACIACS.DTO.DtoPersona;
 import ACIACS.encapsulaciones.*;
 import ACIACS.services.*;
 import ACIACS.util.EstadisticaVisitas;
@@ -26,6 +27,7 @@ public class Controladora {
     private final ServicioTestingNormal servicioTestingNormal = new ServicioTestingNormal();
     private final ServicioTestingPriority servicioTestingPriority = new ServicioTestingPriority();
     private final ServicioUsuario servicioUsuario = new ServicioUsuario();
+    private final ServicioDtoPersona servicioDtoPersona = new ServicioDtoPersona();
 
     private Controladora() {
     }
@@ -111,7 +113,7 @@ public class Controladora {
         TestingNormal aux1 = new TestingNormal(false, 100, new Date(), servicioModuloNormal.buscar("1"));
         agregarTesting(aux1);
 
-        Persona persona = new Persona("402-1409395-3","Daniel ", "","P","Moronta");
+        Persona persona = new Persona("402-1409395-3","Daniel ", "","P","Moronta","danielmoronta23@hotmail.com");
         agregarPersona(persona);
         TestingPriority aux2 = new TestingPriority(false, 39, new Date(), servicioPersona.buscar("402-1409395-3"), servicioModuloPrioritario.buscar("2"));
         agregarTesting(aux2);
@@ -252,6 +254,9 @@ public class Controladora {
 
         }
         return cant;
+    }
+    public DtoPersona buscarPersonaDTO(String cedula){
+        return servicioDtoPersona.buscar(cedula);
     }
 }
 

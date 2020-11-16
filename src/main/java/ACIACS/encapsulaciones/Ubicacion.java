@@ -11,13 +11,15 @@ public class Ubicacion implements Serializable {
     private String longitud;
     @Column(name = "latitud")
     private String latitud;
+    private String dirrecion;
 
     public Ubicacion() {
     }
 
-    public Ubicacion(String longitud, String latitud) {
+    public Ubicacion(String longitud, String latitud, String dirrecion) {
         this.longitud = longitud;
         this.latitud = latitud;
+        this.dirrecion = dirrecion;
     }
 
     public static long getSerialVersionUID() {
@@ -38,5 +40,13 @@ public class Ubicacion implements Serializable {
 
     public void setLatitud(String latitud) {
         this.latitud = latitud;
+    }
+
+    public String getDirrecion() {
+        return dirrecion;
+    }
+
+    public void setDirrecion(String dirrecion) {
+        this.dirrecion = dirrecion;
     }
 }
