@@ -16,208 +16,225 @@
 
 </head>
 <body class="bg-primary">
-    <nav class="sb-topnav navbar navbar-expand navbar-dark sb-sidenav-dark">
-        <a class="navbar-brand text-warning text-center" href="index.html"><b><i>~ACIACS~</i></b></a>
-        <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i>
-        </button>
-        <!-- FORSE -->
-        <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
-            <div class="input-group" hidden>
-                <input class="form-control" type="text" placeholder="Search for..." aria-label="Search"
-                       aria-describedby="basic-addon2"/>
-                <div class="input-group-append">
-                    <button class="btn btn-primary" type="button"><i class="fas fa-search"></i></button>
+<nav class="sb-topnav navbar navbar-expand navbar-dark sb-sidenav-dark">
+    <a class="navbar-brand text-warning text-center" href="index.html"><b><i>~ACIACS~</i></b></a>
+    <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i>
+    </button>
+    <!-- FORSE -->
+    <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+        <div class="input-group" hidden>
+            <input class="form-control" type="text" placeholder="Search for..." aria-label="Search"
+                   aria-describedby="basic-addon2"/>
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="button"><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+    </form>
+    <!----->
+    <ul class="navbar-nav ml-auto ml-md-0">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="profile.html">Perfil</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="login.html">Cerrar Sesión</a>
+            </div>
+        </li>
+    </ul>
+</nav>
+<div id="layoutSidenav">
+    <div id="layoutSidenav_nav">
+        <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+            <div class="sb-sidenav-menu">
+                <div class="nav">
+                    <a class="navbar-brand text-center" href="index.html">
+                        <img src="assets/img/LogoAPP.png" width="100" height="100" class="d-inline-block ml-5 mr-5"
+                             alt=""></a>
+                    <div class="sb-sidenav-menu-heading">Principal</div>
+                    <a class="nav-link" href="dashboard.html">
+                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                        Panel de Control
+                    </a>
+                    <div class="sb-sidenav-menu-heading">Servicios</div>
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts"
+                       aria-expanded="false" aria-controls="collapseLayouts">
+                        <div class="sb-nav-link-icon"><i class="material-icons align-middle">settings</i></div>
+                        Configuraciones
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
+                         data-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" href="sucursales.html">Sucursales</a>
+                            <a class="nav-link" href="profile.html">Perfil</a>
+                        </nav>
+                    </div>
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                       aria-expanded="false" aria-controls="collapsePages">
+                        <div class="sb-nav-link-icon"><i class="material-icons align-middle">accessibility</i></div>
+                        Usuarios con Prioridad
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapsePages" aria-labelledby="headingTwo"
+                         data-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                            <a class="nav-link" href="registerPriority.html">
+                                Registro de Personas
+                            </a>
+                        </nav>
+                    </div>
                 </div>
             </div>
-        </form>
-        <!----->
-        <ul class="navbar-nav ml-auto ml-md-0">
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                    <a class="dropdown-item" href="profile.html">Perfil</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="login.html">Cerrar Sesión</a>
-                </div>
-            </li>
-        </ul>
-    </nav>
-    <div id="layoutSidenav">
-        <div id="layoutSidenav_nav">
-            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-                <div class="sb-sidenav-menu">
-                    <div class="nav">
-                        <a class="navbar-brand text-center" href="index.html">
-                            <img src="assets/img/LogoAPP.png" width="100" height="100" class="d-inline-block ml-5 mr-5"
-                                 alt=""></a>
-                        <div class="sb-sidenav-menu-heading">Principal</div>
-                        <a class="nav-link" href="dashboard.html">
-                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                            Panel de Control
-                        </a>
-                        <div class="sb-sidenav-menu-heading">Servicios</div>
-                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts"
-                           aria-expanded="false" aria-controls="collapseLayouts">
-                            <div class="sb-nav-link-icon"><i class="material-icons align-middle">settings</i></div>
-                            Configuraciones
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
-                             data-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="sucursales.html">Sucursales</a>
-                                <a class="nav-link" href="profile.html">Perfil</a>
-                            </nav>
+            <div class="sb-sidenav-footer">
+                <div class="small">Logeado como:</div>
+                ADMIN
+            </div>
+        </nav>
+    </div>
+
+    <!--  CUERPO DE PAGINA --->
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="card shadow-lg rounded-lg mt-5">
+                        <div class="card-header"><h3 class="text-center font-weight-bold my-4">Registrar Cliente Con
+                            Prioridad</h3>
                         </div>
-                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                           aria-expanded="false" aria-controls="collapsePages">
-                            <div class="sb-nav-link-icon"><i class="material-icons align-middle">accessibility</i></div>
-                            Usuarios con Prioridad
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-                        <div class="collapse" id="collapsePages" aria-labelledby="headingTwo"
-                             data-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                <a class="nav-link" href="registerPriority.html">
-                                    Registro de Personas
-                                </a>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-                <div class="sb-sidenav-footer">
-                    <div class="small">Logeado como:</div>
-                    ADMIN
-                </div>
-            </nav>
-        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="form-group col-lg-6">
+                                    <input class="form-control mb-2 " type="text" placeholder="Cédula" required
+                                           id="cedula">
 
-        <!--  CUERPO DE PAGINA --->
-        <div id="layoutSidenav_content">
-            <main>
-                <div class="row justify-content-center">
-                    <div class="col-lg-6">
-                        <div class="card shadow-lg rounded-lg mt-5">
-                            <div class="card-header"><h3 class="text-center font-weight-bold my-4">Registrar Cliente Con Prioridad</h3>
-                            </div>
-                            <div class="card-body">
-                                <form>
-                                    <div class="row">
-                                        <div class="form-group col-lg-6">
-                                            <input class="form-control mb-2 " type="text" placeholder="Cédula" required>
-
-                                        </div>
-                                        <div class="align-items-center mb-2">
-                                            <button class="btn btn-outline-primary"><i class="fas fa-search"></i> Buscar Cliente</button>
-                                        </div>
-                                    </div>
-
-                                </form>
-                                <form>
-                                    <div class="form-group">
-                                        <input class="form-control mb-3" type="text" placeholder="Nombre" required>
-                                        <input class="form-control mb-3" type="text" placeholder="Apellido" required>
-                                        <input class="form-control mb-3" id="inpu" type="email" aria-describedby="emailHelp"
-                                               placeholder="Correo Electrónico" required>
-                                    </div>
-                                    <div class="form-group d-flex align-items-center justify-content-center mt-4 mb-2">
-                                        <a class="btn btn-success font-weight-bold">Registrar</a>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card shadow-lg m-md-4 rounded-lg mt-5">
-                            <div class="card-header"><h3 class="text-center font-weight-bold my-4">Clientes Registrados</h3>
-
-                            </div>
-                            <div class="card-body shadow">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                        <thead>
-                                        <tr>
-                                            <th>Nombre</th>
-                                            <th>Apellido</th>
-                                            <th>Correo Electrónico</th>
-                                            <th>Selección</th>
-                                        </tr>
-                                        </thead>
-                                        <tfoot>
-                                        <tr>
-                                            <th>Nombre</th>
-                                            <th>Apellido</th>
-                                            <th>Correo Electrónico</th>
-                                            <th>Selección</th>
-                                        </tr>
-                                        </tfoot>
-                                        <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Santo Domingo</td>
-                                            <td>Prioridad</td>
-                                            <td>
-                                                <div class="row ml-2">
-                                                    <button class="btn btn-outline-secondary mr-1" data-toggle="modal" data-target="#modalBloquear">Bloquear</button>
-                                                    <button class="btn btn-outline-danger ml-1" data-toggle="modal" data-target="#modalBorrar">Eliminar</button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Calle del Sol, Santiago</td>
-                                            <td>Normal</td>
-                                            <td>
-                                                <div class="row ml-2">
-                                                    <button class="btn btn-outline-secondary mr-1" data-toggle="modal" data-target="#modalBloquear">Bloquear</button>
-                                                    <button class="btn btn-outline-danger ml-1" data-toggle="modal" data-target="#modalBorrar">Eliminar</button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Navarrete</td>
-                                            <td>Prioridad</td>
-                                            <td>
-                                                <div class="row ml-2">
-                                                    <button class="btn btn-outline-secondary mr-1" data-toggle="modal" data-target="#modalBloquear">Bloquear</button>
-                                                    <button class="btn btn-outline-danger ml-1" data-toggle="modal" data-target="#modalBorrar">Eliminar</button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                                </div>
+                                <div class="align-items-center mb-2">
+                                    <button class="btn btn-outline-primary" onclick="buscarPersona()"><i
+                                            class="fas fa-search"></i> Buscar Cliente
+                                    </button>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </main>
 
-            <footer class="py-4 bg-light mt-auto">
-                <div class="container-fluid">
-                    <div class="d-flex align-items-center justify-content-between small">
-                        <div class="text-muted">Copyright ACIACS&copy; Your Website 2020</div>
-                        <div>
-                            <a href="#">Privacy Policy</a>
-                            &middot;
-                            <a href="#">Terms &amp; Conditions</a>
+                            <form>
+                                <div class="form-group">
+                                    <input class="form-control mb-3" type="text" placeholder="Nombre" id="nombre"
+                                           required disabled>
+                                    <input class="form-control mb-3" type="text" placeholder="Apellido" id="apellido"
+                                           required disabled>
+                                    <input class="form-control mb-3" type="email" aria-describedby="emailHelp"
+                                           placeholder="Correo Electrónico" required id="correoPersona" disabled>
+                                </div>
+                                <div class="form-group d-flex align-items-center justify-content-center mt-4 mb-2">
+                                    <a class="btn btn-success font-weight-bold">Registrar</a>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
-            </footer>
-        </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card shadow-lg m-md-4 rounded-lg mt-5">
+                        <div class="card-header"><h3 class="text-center font-weight-bold my-4">Clientes Registrados</h3>
+
+                        </div>
+                        <div class="card-body shadow">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Apellido</th>
+                                        <th>Correo Electrónico</th>
+                                        <th>Selección</th>
+                                    </tr>
+                                    </thead>
+                                    <tfoot>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Apellido</th>
+                                        <th>Correo Electrónico</th>
+                                        <th>Selección</th>
+                                    </tr>
+                                    </tfoot>
+                                    <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Santo Domingo</td>
+                                        <td>Prioridad</td>
+                                        <td>
+                                            <div class="row ml-2">
+                                                <button class="btn btn-outline-secondary mr-1" data-toggle="modal"
+                                                        data-target="#modalBloquear">Bloquear
+                                                </button>
+                                                <button class="btn btn-outline-danger ml-1" data-toggle="modal"
+                                                        data-target="#modalBorrar">Eliminar
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>Calle del Sol, Santiago</td>
+                                        <td>Normal</td>
+                                        <td>
+                                            <div class="row ml-2">
+                                                <button class="btn btn-outline-secondary mr-1" data-toggle="modal"
+                                                        data-target="#modalBloquear">Bloquear
+                                                </button>
+                                                <button class="btn btn-outline-danger ml-1" data-toggle="modal"
+                                                        data-target="#modalBorrar">Eliminar
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>Navarrete</td>
+                                        <td>Prioridad</td>
+                                        <td>
+                                            <div class="row ml-2">
+                                                <button class="btn btn-outline-secondary mr-1" data-toggle="modal"
+                                                        data-target="#modalBloquear">Bloquear
+                                                </button>
+                                                <button class="btn btn-outline-danger ml-1" data-toggle="modal"
+                                                        data-target="#modalBorrar">Eliminar
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="py-4 bg-light mt-auto">
+            <div class="container-fluid">
+                <div class="d-flex align-items-center justify-content-between small">
+                    <div class="text-muted">Copyright ACIACS&copy; Your Website 2020</div>
+                    <div>
+                        <a href="#">Privacy Policy</a>
+                        &middot;
+                        <a href="#">Terms &amp; Conditions</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </div>
+</div>
 </body>
 
 
 <!-- MODAL -->
-<div class="modal fade" id="modalBloquear" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalBloquear" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -240,7 +257,8 @@
 
 
 <!-- MODAL DELETE-->
-<div class="modal fade" id="modalBorrar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalBorrar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -250,7 +268,7 @@
                 </button>
             </div>
             <div class="modal-body">
-            <p>¿Está seguro que Desea Eliminar al Cliente: <b>xxx</b> ?</p>
+                <p>¿Está seguro que Desea Eliminar al Cliente: <b>xxx</b> ?</p>
 
             </div>
             <div class="modal-footer">
@@ -261,9 +279,10 @@
     </div>
 </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
-            crossorigin="anonymous"></script>
-    <script src="js/scripts.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+<script src="js/scripts.js"></script>
+<script src="js/consultarPersona.js"></script>
 
 </html>
