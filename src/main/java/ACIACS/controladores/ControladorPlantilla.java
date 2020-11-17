@@ -23,9 +23,11 @@ public class ControladorPlantilla extends ControladorBase {
     public void aplicarRutas() {
         app.routes(() -> {
             // VISTA ESTATICA: Bienvenida.
+            /**
             get("/", ctx -> {
                 ctx.render("/Visual/index.html");
             });    //VISTA DEL LOGIN
+             **/
             get("/login", ctx -> {
                 ctx.render("/Visual/login.html");
             });
@@ -41,16 +43,19 @@ public class ControladorPlantilla extends ControladorBase {
                     rolUsuario = aux.getRolUsuario();
                     // Creando un atributo de sesion
                     ctx.sessionAttribute("usuario", aux);
+                    ctx.cookie("usuario", aux.getCorreo());
                     //PAGINA PRINCIPAL
-                    if (rolUsuario.equals(RolUsuario.Admintrador_Comercial)) {
+                    if (rolUsuario==RolUsuario.Admintrador_Comercial) {
+                        System.out.println("admintrador_comercial\n");
                         ctx.redirect("/admintrador_comercial");
-                    } else if (rolUsuario.equals(RolUsuario.Super_Admintrador)) {
+                    } else if (rolUsuario==RolUsuario.Super_Admintrador) {
+                        System.out.println("Super_Admintrador\n");
                         ctx.redirect("/root");
                     }
                 } else {
                     modelo.put("Error", " Por favor, verifique su usuario y constraseña!");
                     //RETORNO A LOGIN
-                    ctx.render("/Visual/index.html", modelo);
+                    ctx.render("/Visual/login.html", modelo);
                 }
 
             });
@@ -65,6 +70,7 @@ public class ControladorPlantilla extends ControladorBase {
                     }
                 });
                 get("/", ctx -> {
+                    System.out.println("Entrando a root");
                     ctx.render("/Visual/root.html");
                 });
             });
@@ -78,6 +84,7 @@ public class ControladorPlantilla extends ControladorBase {
                     }
                 });
                 get("/", ctx -> {
+                    System.out.println("Entrando a dashboard");
                     ctx.render("/Visual/dashboard.html");
                 });
             });

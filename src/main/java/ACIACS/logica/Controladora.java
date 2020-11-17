@@ -124,6 +124,11 @@ public class Controladora {
 
         //agregarUsuario
         Usuario a = new Usuario("danielmoronta23@hotmail.com","dmpACIACIS", RolUsuario.Super_Admintrador,null);
+        agregarUsuario(a);
+    }
+
+    private boolean agregarUsuario(Usuario a) {
+       return servicioUsuario.crear(a);
     }
 
     public EstadisticaVisitas pruebasRealizadasPorHora(String idSucursal) throws ParseException {
