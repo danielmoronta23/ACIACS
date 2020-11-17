@@ -5,6 +5,7 @@ import ACIACS.encapsulaciones.*;
 import ACIACS.services.*;
 import ACIACS.util.EstadisticaVisitas;
 import ACIACS.util.EstatusModulo;
+import ACIACS.util.RolUsuario;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -93,14 +94,14 @@ public class Controladora {
     public boolean editarPersona(Persona persona){
         return servicioPersona.editar(persona);
     }
-    public boolean autenticarUsuario(String correo, String passowerd){
+    public Usuario autenticarUsuario(String correo, String passowerd){
         Usuario aux = servicioUsuario.buscar(correo);
         if(aux!=null){
             if(aux.getPassword().equals(passowerd)){
-                return true;
+                return aux;
             }
         }
-        return false;
+        return null;
     }
     public void datosPruebas() throws ParseException {
         agregarEmpresa(new Empresa("PEPE", "PEPE"));
@@ -120,6 +121,9 @@ public class Controladora {
         Sucursal sucursal = buscarSucursal("1");
         sucursal.setPersonasDentro(20);
         actualizarSucursal(sucursal);
+
+        //agregarUsuario
+        Usuario a = new Usuario("danielmoronta23@hotmail.com","dmpACIACIS", RolUsuario.Super_Admintrador,null);
     }
 
     public EstadisticaVisitas pruebasRealizadasPorHora(String idSucursal) throws ParseException {

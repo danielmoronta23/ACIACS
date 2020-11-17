@@ -1,6 +1,7 @@
 package ACIACS;
 
 import ACIACS.API.ApiRest;
+import ACIACS.controladores.ControladorPlantilla;
 import ACIACS.controladores.ControladorSOAP;
 import ACIACS.logica.Controladora;
 import ACIACS.services.ConexionDB;
@@ -12,7 +13,7 @@ import java.text.ParseException;
 public class Main {
     public static void main(String[] args) {
         Javalin app = Javalin.create(config ->{
-            config.addStaticFiles("/publico"); //Desde la carpeta de resources.
+            config.addStaticFiles("/Visual"); //Desde la carpeta de resources.
             config.enableCorsForAllOrigins();
         });
         try {
@@ -23,6 +24,7 @@ public class Main {
         }
       //  new ControladorSOAP(app).aplicarRutas();
         new ApiRest(app).aplicarRutas();
+        new ControladorPlantilla(app).aplicarRutas();
         app.start(7000);
     }
 }
