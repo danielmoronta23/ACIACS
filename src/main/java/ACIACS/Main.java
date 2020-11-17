@@ -22,7 +22,7 @@ public class Main {
         } catch (SQLException | ParseException throwables) {
             throwables.printStackTrace();
         }
-      //  new ControladorSOAP(app).aplicarRutas();
+        new ControladorSOAP(app).aplicarRutas();
         new ApiRest(app).aplicarRutas();
         new ControladorPlantilla(app).aplicarRutas();
         app.start(7000);

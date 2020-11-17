@@ -8,6 +8,8 @@ import ACIACS.logica.Controladora;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 
+
+// Para acceder al wsdl -> http://localhost:7000/ws/ws?wsdl
 @WebService
 public class SurcursalWebServices {
     private Controladora controladora = Controladora.getInstance();

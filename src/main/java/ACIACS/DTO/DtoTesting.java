@@ -14,13 +14,14 @@ public class DtoTesting {
     public DtoTesting() {
     }
 
-    public DtoTesting(boolean mascarilla, double temperatura, Date fechaResgistro, String idModulo, boolean tipoModulo, String cedulaPersona) {
+    public DtoTesting(boolean mascarilla, double temperatura, Date fechaResgistro, String idModulo, boolean tipoModulo, String cedulaPersona, boolean estatus) {
         this.mascarilla = mascarilla;
         this.temperatura = temperatura;
         this.fechaResgistro = fechaResgistro;
         this.idModulo = idModulo;
         this.tipoModulo = tipoModulo;
         this.cedulaPersona = cedulaPersona;
+        this.estatus = estatus;
     }
 
     public boolean isMascarilla() {
