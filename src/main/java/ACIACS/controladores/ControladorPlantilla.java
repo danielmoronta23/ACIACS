@@ -104,6 +104,9 @@ public class ControladorPlantilla extends ControladorBase {
                 }
 
             });
+            get("/registro-de-empresa", ctx -> {
+                ctx.render("/Visual/register.html");
+            });
         });
 
     }
