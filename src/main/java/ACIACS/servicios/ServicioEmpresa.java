@@ -2,7 +2,9 @@ package ACIACS.servicios;
 
 import ACIACS.encapsulaciones.Empresa;
 
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import java.util.Date;
 import java.util.List;
@@ -25,5 +27,18 @@ public class ServicioEmpresa extends ManejadorBD<Empresa> {
             return empresaList.get(0);
         }
         return null;
+    }
+
+    public Empresa crearEmpresa(Empresa entidad) throws IllegalArgumentException, PersistenceException {
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(entidad);
+            em.getTransaction().commit();
+
+        } finally {
+            em.close();
+        }
+        return entidad;
     }
 }

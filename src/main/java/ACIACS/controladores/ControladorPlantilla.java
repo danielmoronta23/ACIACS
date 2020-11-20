@@ -88,6 +88,22 @@ public class ControladorPlantilla extends ControladorBase {
                     ctx.render("/Visual/dashboard.html");
                 });
             });
+            post("/registro-de-empresa", ctx -> {
+                Map<String, Object> modelo = new HashMap<>();
+                String correo = ctx.formParam("correo");
+                String pass = ctx.formParam("password");
+                String nombreEmpresa = ctx.formParam("nombreEmpresa");
+                String RNCEmpresa = ctx.formParam("nombreEmpresa");
+                modelo.put("Error", "No se pudo crear la Empresa, intento mas tarde.");
+                if(correo!=null && pass!=null && nombreEmpresa!=null){
+                    if(Controladora.getControladora().agregarEmpresa(nombreEmpresa, correo, pass)){
+                        ctx.redirect("/login");
+                    }else{
+                        ctx.render("/Visual/register.html");
+                    }
+                }
+
+            });
         });
 
     }

@@ -10,10 +10,7 @@ import ACIACS.util.RolUsuario;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Controladora {
     private static Controladora controladora;
@@ -88,23 +85,26 @@ public class Controladora {
         return servicioSucursal.pruebasRealizadasPorFecha(new Date(), sucursal);
     }
 
-    public boolean agregarPersona(Persona persona){
+    public boolean agregarPersona(Persona persona) {
         return servicioPersona.crear(persona);
     }
-    public boolean editarPersona(Persona persona){
+
+    public boolean editarPersona(Persona persona) {
         return servicioPersona.editar(persona);
     }
-    public Usuario autenticarUsuario(String correo, String passowerd){
+
+    public Usuario autenticarUsuario(String correo, String passowerd) {
         Usuario aux = servicioUsuario.buscar(correo);
-        if(aux!=null){
-            if(aux.getPassword().equals(passowerd)){
+        if (aux != null) {
+            if (aux.getPassword().equals(passowerd)) {
                 return aux;
             }
         }
         return null;
     }
+
     public void datosPruebas() throws ParseException {
-        agregarEmpresa(new Empresa("PEPE", "PEPE"));
+        agregarEmpresa(new Empresa("PEPE", new Date()));
         agregarSucursal(new Sucursal(new Ubicacion(), 0, 100, buscarEmpresa("1")));
         agregarModulo(new ModuloNormal(EstatusModulo.Activo, buscarSucursal("1")));
         agregarModulo(new ModuloPrioridad(EstatusModulo.Activo, buscarSucursal("1")));
@@ -114,7 +114,7 @@ public class Controladora {
         TestingNormal aux1 = new TestingNormal(false, 100, new Date(), servicioModuloNormal.buscar("1"));
         agregarTesting(aux1);
 
-        Persona persona = new Persona("402-1409395-3","Daniel ", "","P","Moronta","danielmoronta23@hotmail.com");
+        Persona persona = new Persona("402-1409395-3", "Daniel ", "", "P", "Moronta", "danielmoronta23@hotmail.com");
         agregarPersona(persona);
         TestingPriority aux2 = new TestingPriority(false, 39, new Date(), servicioPersona.buscar("402-1409395-3"), servicioModuloPrioritario.buscar("2"));
         agregarTesting(aux2);
@@ -123,12 +123,12 @@ public class Controladora {
         actualizarSucursal(sucursal);
 
         //agregarUsuario
-        Usuario a = new Usuario("danielmoronta23@hotmail.com","dmpACIACIS", RolUsuario.Super_Admintrador,null);
+        Usuario a = new Usuario("danielmoronta23@hotmail.com", "dmpACIACIS", RolUsuario.Super_Admintrador, null);
         agregarUsuario(a);
     }
 
     private boolean agregarUsuario(Usuario a) {
-       return servicioUsuario.crear(a);
+        return servicioUsuario.crear(a);
     }
 
     public EstadisticaVisitas pruebasRealizadasPorHora(String idSucursal) throws ParseException {
@@ -243,29 +243,41 @@ public class Controladora {
 
     }
 
-    public List<Sucursal> listaSucursalesPorEmpresa(String empresa){
+    public List<Sucursal> listaSucursalesPorEmpresa(String empresa) {
         Empresa aux = servicioEmpresa.buscar(empresa);
-        if(aux!=null){
+        if (aux != null) {
             return (List<Sucursal>) aux.getListaSucursal();
         }
         return null;
     }
-    public List<Empresa> listaEmpresas(){
+
+    public List<Empresa> listaEmpresas() {
         return servicioEmpresa.explorarTodo();
     }
-    public Object cantidadDePersonaEnSucursal(String idSucursal){
+
+    public Object cantidadDePersonaEnSucursal(String idSucursal) {
         int[] cant = new int[2];
 
         Sucursal sucursal = servicioSucursal.buscar(idSucursal);
-        if(sucursal!=null) {
+        if (sucursal != null) {
             cant[0] = sucursal.getCapacidad();
             cant[1] = sucursal.getPersonasDentro();
 
         }
         return cant;
     }
-    public DtoPersona buscarPersonaDTO(String cedula){
+
+    public DtoPersona buscarPersonaDTO(String cedula) {
         return servicioDtoPersona.buscar(cedula);
+    }
+
+    // --------------------------- CRUD REGISTRO DE EMPRESA ------------------------------
+    public boolean agregarEmpresa(String nombreEmpresa, String correoAdministrador, String passwodAdmistrador) {
+        Empresa empresa = servicioEmpresa.crearEmpresa(new Empresa(nombreEmpresa, new Date()));
+        if (empresa != null) {
+           return servicioUsuario.crear(new Usuario(correoAdministrador, passwodAdmistrador, RolUsuario.Admintrador_Comercial, empresa));
+        }
+        return false;
     }
 }
 

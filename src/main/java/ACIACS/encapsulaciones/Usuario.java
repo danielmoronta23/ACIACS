@@ -23,6 +23,11 @@ public class Usuario implements Serializable {
     public Usuario() {
     }
 
+    public Usuario(String correo, String password) {
+        this.correo = correo;
+        this.password = password;
+    }
+
     public Usuario(String correo, String password, RolUsuario rolUsuario, Empresa empresa) {
         this.correo = correo;
         this.password = password;

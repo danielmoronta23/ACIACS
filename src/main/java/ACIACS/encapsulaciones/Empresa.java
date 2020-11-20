@@ -22,9 +22,9 @@ public class Empresa implements Serializable {
 
     public Empresa() {
     }
-    public Empresa(String nombre, String descripcion) {
+    public Empresa(String nombre, Date fechaIngreso) {
         this.nombre = nombre;
-        this.descripcion = descripcion;
+        this.fechaIngreso = fechaIngreso;
     }
 
 
