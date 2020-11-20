@@ -3,6 +3,7 @@ package ACIACS;
 import ACIACS.API.ApiRest;
 import ACIACS.controladores.ControladorPlantilla;
 import ACIACS.controladores.ControladorSOAP;
+import ACIACS.controladores.ControladorWebSocket;
 import ACIACS.logica.Controladora;
 import ACIACS.services.ConexionDB;
 import io.javalin.Javalin;
@@ -25,6 +26,11 @@ public class Main {
         new ControladorSOAP(app).aplicarRutas();
         new ApiRest(app).aplicarRutas();
         new ControladorPlantilla(app).aplicarRutas();
+
         app.start(7000);
+        /**
+         *        WebSocket
+         */
+        new ControladorWebSocket(app).aplicarRutas();
     }
 }
