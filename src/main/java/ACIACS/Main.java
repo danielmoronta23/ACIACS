@@ -5,7 +5,7 @@ import ACIACS.controladores.ControladorPlantilla;
 import ACIACS.controladores.ControladorSOAP;
 import ACIACS.controladores.ControladorWebSocket;
 import ACIACS.logica.Controladora;
-import ACIACS.services.ConexionDB;
+import ACIACS.servicios.ConexionDB;
 import io.javalin.Javalin;
 
 import java.sql.SQLException;

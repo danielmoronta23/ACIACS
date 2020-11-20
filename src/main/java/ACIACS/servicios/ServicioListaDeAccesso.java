@@ -1,4 +1,4 @@
-package ACIACS.services;
+package ACIACS.servicios;
 
 import ACIACS.encapsulaciones.ListaDeAccesso;
 import ACIACS.util.EstatusAcceso;

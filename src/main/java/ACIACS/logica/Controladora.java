@@ -2,7 +2,7 @@ package ACIACS.logica;
 
 import ACIACS.DTO.DtoPersona;
 import ACIACS.encapsulaciones.*;
-import ACIACS.services.*;
+import ACIACS.servicios.*;
 import ACIACS.util.EstadisticaVisitas;
 import ACIACS.util.EstatusModulo;
 import ACIACS.util.RolUsuario;
