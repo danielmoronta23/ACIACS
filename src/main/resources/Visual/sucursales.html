@@ -106,7 +106,9 @@
 
                 <div class="row">
 
-                    <button class="btn btn-success rounded-lg ml-4 mb-4"><i class="material-icons justify-content-center">call</i><b class="align-top">  Solicitar Nueva Sucursal</b></button>
+                    <button class="btn btn-success rounded-lg ml-4 mb-4" type="button" data-container="body" data-toggle="popover" data-placement="right" data-content="Teléfono Sin Cargos: 809-200-ACIACS"><i class="material-icons justify-content-center">call</i>
+                        <b class="align-top">  Solicitar Nueva Sucursal</b>
+                    </button>
                     <button class="btn btn-outline-primary ml-4 mb-4" data-toggle="modal" data-target="#exampleModal"><i class="material-icons justify-content-center">settings</i><b class="align-top">  Configurar Sucursal</b></button>
                 </div>
 
@@ -129,8 +131,7 @@
                                             <th>País</th>
                                             <th>Fecha de Registro</th>
                                             <th>Número de Módulos</th>
-                                            <th>Capacidad Máxima</th>
-                                            <th>Acción</th>
+                                            <th>Capacidad Máxima de Personas Dentro del Local</th>
                                         </tr>
                                         </thead>
                                         <tfoot>
@@ -141,8 +142,7 @@
                                             <th>País</th>
                                             <th>Fecha de Registro</th>
                                             <th>Número de Módulos</th>
-                                            <th>Capacidad Máxima</th>
-                                            <th>Acción</th>
+                                            <th>Capacidad Máxima de Personas Dentro del Local</th>
                                         </tr>
                                         </tfoot>
                                         <tbody>
@@ -154,7 +154,6 @@
                                             <td>2011/06/27</td>
                                             <td>4</td>
                                             <td>312</td>
-                                            <td><i class="material-icons align-middle">settings</i></td>
                                         </tr>
                                         <tr>
                                             <td>2</td>
@@ -164,7 +163,6 @@
                                             <td>2019/06/27</td>
                                             <td>2</td>
                                             <td>1200</td>
-                                            <td><a id="editar" data-toggle="modal"><i class="material-icons justify-content-center">settings</i></a></td>
                                         </tr>
                                         <tr>
                                             <td>3</td>
@@ -174,7 +172,6 @@
                                             <td>2015/06/1</td>
                                             <td>1</td>
                                             <td>25</td>
-                                            <td><i class="material-icons align-middle">settings</i></td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -215,6 +212,27 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
+
+            </div>
+            <div class="modal-body align-middle">
+                <form method="post" action="/ingresar">
+                    <div class="row justify-content-center mt-2">
+                        <div class="col-lg-5">
+                            <div class="form-group">
+                                <select class="custom-select">
+                                    <option selected>ID de Sucursal</option>
+                                    <option value="1">1</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <input class="form-control" id="maxCap" name="maxCap" type="text" placeholder="Capacidad Máxima" required>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
             <div class="modal-body">
 
@@ -222,7 +240,8 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-primary font-weight-bold">Guardar</button>
+                <button type="button" class="btn btn-danger font-weight-bold" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
@@ -232,5 +251,12 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="js/scripts.js"></script>
+<script>
+    $(function () {
+        $('[data-toggle="popover"]').popover({
+            container: 'body'
+        })
+    })
+</script>
 </body>
 </html>
