@@ -2,28 +2,30 @@
 Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#292b2c';
 
-function cargarGraficaVisitasPorHora(visitasNoramalesAceptadas, visitaNormalesDenegadas, visitasPrioritariaAceptada, visitasPrioritariaDenegada) {
+function cargarGraficaVisitasPorHora(visitasNoramalesAceptadas, visitaNormalesDenegadas, visitasPrioritariaAceptada, visitasPrioritariaDenegada, visitasTotales) {
     var ctx = document.getElementById("chartN");
     var ctxPrioritario = document.getElementById("chartP");
+    let maximoVisitasNormales = 5;
+    let maximoVisitasPrioritaria = 5
+    let maximo = 5;
+    if (visitasTotales > 0) {
+        if (Math.max.apply(null, visitasNoramalesAceptadas) > Math.max.apply(null, visitaNormalesDenegadas)) {
+            maximoVisitasNormales = Math.max.apply(null, visitasNoramalesAceptadas);
+        } else {
+            maximoVisitasNormales = Math.max.apply(null, visitaNormalesDenegadas);
+        }
 
-    let maximoVisitasNormales = 0;
-    let maximoVisitasPrioritaria = 0
-    let maximo = 0;
-    if (Math.max.apply(null, visitasNoramalesAceptadas) > Math.max.apply(null, visitaNormalesDenegadas)) {
-        maximoVisitasNormales = Math.max.apply(null, visitasNoramalesAceptadas);
-    } else {
-        maximoVisitasNormales = Math.max.apply(null, visitaNormalesDenegadas);
-    }
+        if (Math.max.apply(null, visitasPrioritariaAceptada) > Math.max.apply(null, visitasPrioritariaDenegada)) {
+            maximoVisitasPrioritaria = Math.max.apply(null, visitasPrioritariaAceptada);
+        } else {
+            maximoVisitasPrioritaria = Math.max.apply(null, visitasPrioritariaAceptada);
+        }
+        if (maximoVisitasNormales > maximoVisitasPrioritaria) {
+            maximo = maximoVisitasNormales;
+        } else {
+            maximo = maximoVisitasPrioritaria
+        }
 
-    if (Math.max.apply(null, visitasPrioritariaAceptada) > Math.max.apply(null, visitasPrioritariaDenegada)) {
-        maximoVisitasPrioritaria = Math.max.apply(null, visitasPrioritariaAceptada);
-    } else {
-        maximoVisitasPrioritaria = Math.max.apply(null, visitasPrioritariaAceptada);
-    }
-    if (maximoVisitasNormales > maximoVisitasPrioritaria) {
-        maximo = maximoVisitasNormales;
-    } else {
-        maximo = maximoVisitasPrioritaria
     }
 
     let inicio = 5;
@@ -40,7 +42,16 @@ function cargarGraficaVisitasPorHora(visitasNoramalesAceptadas, visitaNormalesDe
         vPD[contador] = visitasPrioritariaDenegada[i];
         contador = contador + 1;
     }
-    var VisitasNormalesRealizadas = new Chart(ctx, {
+    // comprobando si existe nuestra variable. En caso de que exista, la limpiamos y destruimos.
+    if (window.VisitasNormalesRealizadas) {
+        window.VisitasNormalesRealizadas.clear();
+        window.VisitasNormalesRealizadas.destroy();
+    }
+    if (window.VisitasConPrioridadRealizadas) {
+        window.VisitasConPrioridadRealizadas.clear();
+        window.VisitasConPrioridadRealizadas.destroy();
+    }
+    window.VisitasNormalesRealizadas = new Chart(ctx, {
         type: 'line',
         data: {
             labels: ["5:00", "6:00", "7:00", "8:00", "9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"],
@@ -103,7 +114,7 @@ function cargarGraficaVisitasPorHora(visitasNoramalesAceptadas, visitaNormalesDe
             }
         }
     });
-    var VisitasConPrioridadRealizadas = new Chart(ctxPrioritario, {
+    window.VisitasConPrioridadRealizadas = new Chart(ctxPrioritario, {
         type: 'line',
         data: {
             labels: ["5:00", "6:00", "7:00", "8:00", "9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"],
@@ -166,7 +177,6 @@ function cargarGraficaVisitasPorHora(visitasNoramalesAceptadas, visitaNormalesDe
             }
         }
     });
-
 }
 
 function cargarTotalesDeVisitas(a, b, c, d) {
@@ -181,12 +191,11 @@ function cargarTotalesDeVisitas(a, b, c, d) {
 
 }
 
-function cargarDatosDesdeAPI() {
+function cargarDatosDesdeAPI(idSucursal) {
     let pro = "";
     let estadisticas = "";
     let estadisticaHoy = "";
     let estadisticaMensual = "";
-    let idSucursal = "1";
     let endpoint = "estadisticas"
     const Http = new XMLHttpRequest();
     const url = 'http://localhost:7000/api-Rest/' + endpoint + "/" + idSucursal;
@@ -198,38 +207,53 @@ function cargarDatosDesdeAPI() {
             estadisticaHoy = estadisticas[0];
             estadisticaMensual = estadisticas[1];
             pro = estadisticas[2];
+            if (estadisticas[3] == -1) {
+
+            } else {
+                document.getElementById("CapacidadLocal").innerText = "Capacidad del Local : " + estadisticas[3] + " Personas";
+
+            }
             cargarTotalesDeVisitas(estadisticaHoy.visitasNormalesAceptadas.Total, estadisticaHoy.visitasNormalesDenegadas.Total, estadisticaHoy.visitasPrioritariaAceptada.Total, estadisticaHoy.visitasPrioritariaDenegada.Total)
-            cargarGraficaVisitasPorHora(estadisticaHoy.visitasNormalesAceptadas.PorHora, estadisticaHoy.visitasNormalesDenegadas.PorHora, estadisticaHoy.visitasPrioritariaAceptada.PorHora, estadisticaHoy.visitasPrioritariaDenegada.PorHora);
-            cargarGraficaMensual(estadisticaMensual.visitasNormalesAceptadas.PorMes, estadisticaMensual.visitasNormalesDenegadas.PorMes, estadisticaMensual.visitasPrioritariaAceptada.PorMes, estadisticaMensual.visitasPrioritariaDenegada.PorMes);
+            let total = estadisticaHoy.visitasNormalesAceptadas.Total + estadisticaHoy.visitasNormalesDenegadas.Total + estadisticaHoy.visitasPrioritariaAceptada.Total + estadisticaHoy.visitasPrioritariaDenegada.Total;
+            cargarGraficaVisitasPorHora(estadisticaHoy.visitasNormalesAceptadas.PorHora, estadisticaHoy.visitasNormalesDenegadas.PorHora, estadisticaHoy.visitasPrioritariaAceptada.PorHora, estadisticaHoy.visitasPrioritariaDenegada.PorHora, total);
+            cargarGraficaMensual(estadisticaMensual.visitasNormalesAceptadas.PorMes, estadisticaMensual.visitasNormalesDenegadas.PorMes, estadisticaMensual.visitasPrioritariaAceptada.PorMes, estadisticaMensual.visitasPrioritariaDenegada.PorMes, total);
             cargarProgressBar(pro[0], pro[1]);
         }
 
     }
 }
 
-function cargarGraficaMensual(visitasNoramalesAceptadas, visitaNormalesDenegadas, visitasPrioritariaAceptada, visitasPrioritariaDenegada) {
-    let maximoVisitasNormales = 0;
-    let maximoVisitasPrioritaria = 0
-    let maximo = 0;
-    if (Math.max.apply(null, visitasNoramalesAceptadas) > Math.max.apply(null, visitaNormalesDenegadas)) {
-        maximoVisitasNormales = Math.max.apply(null, visitasNoramalesAceptadas);
-    } else {
-        maximoVisitasNormales = Math.max.apply(null, visitaNormalesDenegadas);
-    }
+function cargarGraficaMensual(visitasNoramalesAceptadas, visitaNormalesDenegadas, visitasPrioritariaAceptada, visitasPrioritariaDenegada, cantidadTotal) {
+    let maximoVisitasNormales = 5;
+    let maximoVisitasPrioritaria = 5;
+    let maximo = 5;
+    if (cantidadTotal > 0) {
+        if (Math.max.apply(null, visitasNoramalesAceptadas) > Math.max.apply(null, visitaNormalesDenegadas)) {
+            maximoVisitasNormales = Math.max.apply(null, visitasNoramalesAceptadas);
+        } else {
+            maximoVisitasNormales = Math.max.apply(null, visitaNormalesDenegadas);
+        }
 
-    if (Math.max.apply(null, visitasPrioritariaAceptada) > Math.max.apply(null, visitasPrioritariaDenegada)) {
-        maximoVisitasPrioritaria = Math.max.apply(null, visitasPrioritariaAceptada);
-    } else {
-        maximoVisitasPrioritaria = Math.max.apply(null, visitasPrioritariaAceptada);
-    }
-    if (maximoVisitasNormales > maximoVisitasPrioritaria) {
-        maximo = maximoVisitasNormales;
-    } else {
-        maximo = maximoVisitasPrioritaria
+        if (Math.max.apply(null, visitasPrioritariaAceptada) > Math.max.apply(null, visitasPrioritariaDenegada)) {
+            maximoVisitasPrioritaria = Math.max.apply(null, visitasPrioritariaAceptada);
+        } else {
+            maximoVisitasPrioritaria = Math.max.apply(null, visitasPrioritariaAceptada);
+        }
+        if (maximoVisitasNormales > maximoVisitasPrioritaria) {
+            maximo = maximoVisitasNormales;
+        } else {
+            maximo = maximoVisitasPrioritaria
+        }
+
     }
 
     var ctx = document.getElementById("myBarChart");
-    var myLineChart = new Chart(ctx, {
+    // comprobando si existe nuestra variable. En caso de que exista, la limpiamos y destruimos.
+    if (window.myLineChart) {
+        window.myLineChart.clear();
+        window.myLineChart.destroy();
+    }
+    window.myLineChart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
@@ -285,23 +309,47 @@ function cargarGraficaMensual(visitasNoramalesAceptadas, visitaNormalesDenegadas
 
 function cargarProgressBar(capacidad, dentro) {
     let porcentaje = 0;
+    let pbarDentro = document.getElementById("pbarDentro");
+    let pbarlibre = document.getElementById("pbarlibre");
     if (dentro > 0) {
         porcentaje = ((capacidad - dentro) / capacidad) * 100;
     }
-    // (capacidad-dentro)/dentro
-    let pbarDentro = document.getElementById("pbarDentro");
-    let pbarlibre = document.getElementById("pbarlibre");
-    pbarDentro.style.width = 100 - porcentaje + "%";
-    pbarDentro.innerText = dentro;
-    pbarlibre.style.width = porcentaje + "%";
-    pbarlibre.innerText = capacidad - dentro;
+    if (dentro == 0) {
+        pbarlibre.style.width = 100 + "%";
+        pbarlibre.innerText = capacidad;
+        pbarDentro.style.width = 0 + "%";
+        pbarDentro.innerText = dentro;
+    } else {
+        // (capacidad-dentro)/dentro
+        pbarDentro.style.width = 100 - porcentaje + "%";
+        pbarDentro.innerText = dentro;
+        pbarlibre.style.width = porcentaje + "%";
+        pbarlibre.innerText = capacidad - dentro;
+    }
 }
 
 $(document).ready(function () {
     console.log("ready!");
-    cargarDatosDesdeAPI();
+    actualizarDatos();
 });
 
+function cambiarSucursal() {
+    let sucural = document.getElementById("inputGroupSelect01");
+    // alert("valor--> " + sucural.value);
+    cargarDatosDesdeAPI(sucural.value);
+
+}
+
 function actualizarDatos() {
-    cargarDatosDesdeAPI();
+    let sucural = document.getElementById("inputGroupSelect01");
+    if (sucural.length > 0) {
+        // hay mas de una sucursal
+        let selectedOption = sucural.options[sucural.selectedIndex];
+        let id = selectedOption.value;
+        cargarDatosDesdeAPI(id);
+        return 0;
+    }
+    //no hay sucursales
+    return -1;
+
 }

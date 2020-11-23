@@ -104,8 +104,10 @@ public class Controladora {
     }
 
     public void datosPruebas() throws ParseException {
-        agregarEmpresa(new Empresa("PEPE", new Date()));
-        agregarSucursal(new Sucursal(new Ubicacion(), 0, 100, buscarEmpresa("1")));
+        agregarEmpresa(new Empresa("SuperMecado El Pueblo", new Date()));
+        agregarSucursal(new Sucursal(new Ubicacion("","","Navarrete"), 0, 100, buscarEmpresa("1")));
+        agregarSucursal(new Sucursal(new Ubicacion("","","La Vega"), 0, 100, buscarEmpresa("1")));
+
         agregarModulo(new ModuloNormal(EstatusModulo.Activo, buscarSucursal("1")));
         agregarModulo(new ModuloPrioridad(EstatusModulo.Activo, buscarSucursal("1")));
 
@@ -122,8 +124,9 @@ public class Controladora {
         sucursal.setPersonasDentro(20);
         actualizarSucursal(sucursal);
 
+
         //agregarUsuario
-        Usuario a = new Usuario("danielmoronta23@hotmail.com", "dmpACIACIS", RolUsuario.Super_Admintrador, null);
+        Usuario a = new Usuario("danielmoronta23@hotmail.com", "dmpACIACIS", RolUsuario.Admintrador_Comercial, buscarEmpresa("1"));
         agregarUsuario(a);
     }
 
@@ -278,6 +281,10 @@ public class Controladora {
            return servicioUsuario.crear(new Usuario(correoAdministrador, passwodAdmistrador, RolUsuario.Admintrador_Comercial, empresa));
         }
         return false;
+    }
+
+    public Usuario buscarUsuario(String s) {
+       return servicioUsuario.buscar(s);
     }
 }
 

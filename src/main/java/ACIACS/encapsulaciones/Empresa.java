@@ -3,6 +3,7 @@ package ACIACS.encapsulaciones;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -12,10 +13,10 @@ public class Empresa implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
     private String nombre;
-    @OneToMany(mappedBy = "empresa")
-    private Set<Sucursal> listaSucursal;
+    @OneToMany(mappedBy = "empresa",fetch = FetchType.EAGER)
+    private List<Sucursal> listaSucursal;
     @OneToMany(mappedBy = "empresa", fetch = FetchType.LAZY)
-    private Set<Usuario> listaUsuario;
+    private List<Usuario> listaUsuario;
     private String descripcion;
     @Column(name = "fecha_Ingreso")
     private Date fechaIngreso;
@@ -29,7 +30,7 @@ public class Empresa implements Serializable {
 
 
 
-    public Empresa(String nombre, Set<Sucursal> listaSucursal, String descripcion) {
+    public Empresa(String nombre, List<Sucursal> listaSucursal, String descripcion) {
         this.nombre = nombre;
         this.listaSucursal = listaSucursal;
         this.descripcion = descripcion;
@@ -52,19 +53,19 @@ public class Empresa implements Serializable {
         this.nombre = nombre;
     }
 
-    public Set<Sucursal> getListaSucursal() {
+    public List<Sucursal> getListaSucursal() {
         return listaSucursal;
     }
 
-    public void setListaSucursal(Set<Sucursal> listaSucursal) {
+    public void setListaSucursal(List<Sucursal> listaSucursal) {
         this.listaSucursal = listaSucursal;
     }
 
-    public Set<Usuario> getListaUsuario() {
+    public List<Usuario> getListaUsuario() {
         return listaUsuario;
     }
 
-    public void setListaUsuario(Set<Usuario> listaUsuario) {
+    public void setListaUsuario(List<Usuario> listaUsuario) {
         this.listaUsuario = listaUsuario;
     }
 

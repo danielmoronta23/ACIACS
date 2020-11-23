@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th>
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -44,7 +44,7 @@
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                 <a class="dropdown-item" href="profile.html">Perfil</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="login.html">Cerrar Sesión</a>
+                <a class="dropdown-item" href="/loginOUT">Cerrar Sesión</a>
             </div>
         </li>
     </ul>
@@ -110,16 +110,21 @@
                             <label class="input-group-text bg-white" for="inputGroupSelect01"><b>Datos Correspondientes
                                 a la Sucursal de: </b></label>
                         </div>
-                        <select class="custom-select border-left-dark shadow h-100" id="inputGroupSelect01">
-                            <option selected>Navarrete</option>
-                            <option value="2">Santo Domingo</option>
-                            <option value="3">Calle del Sol, Santiago</option>
+                        <select class="custom-select border-left-dark shadow h-100" id="inputGroupSelect01"
+                                 onchange="cambiarSucursal()" >
+                            <option th:each="sucursal, sucStatus: ${listaSucursales}" th:value="${sucursal.id}" th:text="${sucursal.ubicacion.dirrecion}" th:selected="${sucStatus.index==0}" selected></option>
+                        </select>
+                        <select class="custom-select border-left-dark shadow h-100" id="inputGroupSelect02"
+                                th:if="${listaSucursales.size<1}">
+                            <option selected>Aun no hay sucursales registradas.</option>
                         </select>
 
 
                     </div>
 
-                    <button class="btn btn-primary mt-4 my-4 font-weight-bold" onclick="actualizarDatos()">Actualizar Datos</button>
+                    <button class="btn btn-primary mt-4 my-4 font-weight-bold" onclick="actualizarDatos()">Actualizar
+                        Datos
+                    </button>
 
                 </div>
 
@@ -131,16 +136,18 @@
                         <div class="card border-left-primary shadow h-100">
                             <div class="card-header">
                                 <i class="material-icons align-middle">business</i>
-                                <b class="align-middle">Capacidad del Local : 254 Personas</b>
+                                <b class="align-middle" id="CapacidadLocal">Capacidad del Local : </b>
                             </div>
                             <div class="card-body">
                                 <div class="container">
                                     <div class="progress">
-                                        <div id="pbarDentro" class="progress-bar progress-bar-striped progress-bar-animated bg-warning"
+                                        <div id="pbarDentro"
+                                             class="progress-bar progress-bar-striped progress-bar-animated bg-warning"
                                              role="progressbar" aria-valuenow="75" aria-valuemin="0"
                                              aria-valuemax="100" style="width: 75%"><i
                                                 class="font-weight-bold text-black-50">190</i></div>
-                                        <div id="pbarlibre" class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+                                        <div id="pbarlibre"
+                                             class="progress-bar progress-bar-striped progress-bar-animated bg-success"
                                              role="progressbar" aria-valuenow="25" aria-valuemin="0"
                                              aria-valuemax="100" style="width: 25%"><i class="font-weight-bold ">63</i>
                                         </div>
@@ -252,7 +259,6 @@
                 <ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item active font-weight-bold">DATOS GENERALES DE LA EMPRESA</li>
                 </ol>
-
 
 
                 <div class="row">

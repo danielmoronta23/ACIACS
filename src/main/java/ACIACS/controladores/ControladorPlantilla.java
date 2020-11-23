@@ -1,5 +1,6 @@
 package ACIACS.controladores;
 
+import ACIACS.encapsulaciones.Sucursal;
 import ACIACS.encapsulaciones.Usuario;
 import ACIACS.logica.Controladora;
 import ACIACS.util.ControladorBase;
@@ -8,8 +9,7 @@ import io.javalin.Javalin;
 import io.javalin.plugin.rendering.JavalinRenderer;
 import io.javalin.plugin.rendering.template.JavalinThymeleaf;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
 
@@ -26,10 +26,20 @@ public class ControladorPlantilla extends ControladorBase {
             /**
             get("/", ctx -> {
                 ctx.render("/Visual/index.html");
-            });    //VISTA DEL LOGIN
+            });
+             //VISTA DEL LOGIN
              **/
             get("/login", ctx -> {
                 ctx.render("/Visual/login.html");
+            });
+            //CERRAR SESION
+            app.get("/loginOUT", ctx -> {
+                ctx.clearCookieStore();
+                String id = ctx.req.getSession().getId();
+                // INVALIDANDO LA SESION.
+                ctx.req.getSession().invalidate();
+                ctx.result(String.format("La Sesion: %s hacido invalidada", id));
+                ctx.redirect("/login");
             });
             // AUTENTICACIÓN EN EL LOGIN
             post("/ingresar", ctx -> {
@@ -75,6 +85,7 @@ public class ControladorPlantilla extends ControladorBase {
                 });
             });
             path("/administrador-comercial", () -> {
+
                 before("/", ctx -> {
                     // VERIFICAR SI EXISTE COOKIE PARA ENTRAR A LA PAGINA PRINCIPAL O LLEVAR AL LOGIN
                     if (ctx.sessionAttribute("usuario") != null) {
@@ -84,8 +95,16 @@ public class ControladorPlantilla extends ControladorBase {
                     }
                 });
                 get("/", ctx -> {
-                    System.out.println("Entrando a dashboard");
-                    ctx.render("/Visual/dashboard.html");
+                    Usuario usuario = Controladora.getControladora().buscarUsuario(ctx.cookie("usuario"));
+                    Map<String, Object> modelo = new HashMap<>();
+                    List<Sucursal> sucursalList;
+                    if(usuario!=null){
+                        sucursalList = usuario.getEmpresa().getListaSucursal();
+                        System.out.println("Entrando a dashboard");
+                        modelo.put("rol",usuario.getRolUsuario().toString());
+                        modelo.put("listaSucursales",sucursalList);
+                        ctx.render("/Visual/dashboard.html", modelo);
+                    }
                 });
             });
             post("/registro-de-empresa", ctx -> {
@@ -107,6 +126,7 @@ public class ControladorPlantilla extends ControladorBase {
             get("/registro-de-empresa", ctx -> {
                 ctx.render("/Visual/register.html");
             });
+
         });
 
     }
