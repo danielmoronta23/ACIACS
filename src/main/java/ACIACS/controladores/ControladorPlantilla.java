@@ -46,8 +46,8 @@ public class ControladorPlantilla extends ControladorBase {
                     ctx.cookie("usuario", aux.getCorreo());
                     //PAGINA PRINCIPAL
                     if (rolUsuario==RolUsuario.Admintrador_Comercial) {
-                        System.out.println("admintrador_comercial\n");
-                        ctx.redirect("/admintrador_comercial");
+                        System.out.println("administrador-comercial\n");
+                        ctx.redirect("/administrador-comercial");
                     } else if (rolUsuario==RolUsuario.Super_Admintrador) {
                         System.out.println("Super_Admintrador\n");
                         ctx.redirect("/root");
@@ -74,7 +74,7 @@ public class ControladorPlantilla extends ControladorBase {
                     ctx.render("/Visual/root.html");
                 });
             });
-            path("/admintrador-comercial", () -> {
+            path("/administrador-comercial", () -> {
                 before("/", ctx -> {
                     // VERIFICAR SI EXISTE COOKIE PARA ENTRAR A LA PAGINA PRINCIPAL O LLEVAR AL LOGIN
                     if (ctx.sessionAttribute("usuario") != null) {
