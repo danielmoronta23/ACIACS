@@ -21,12 +21,17 @@ public class SurcursalWebServices {
     }
 
     @WebMethod
-    public int capacidadSucursal(String idSucursal) {
+    public Object[] capacidadSucursal(String idSucursal) {
+        Object[] resultado = new Object[3];
         Sucursal sucursal = controladora.buscarSucursal(idSucursal);
         if(sucursal!=null){
-            return sucursal.getCapacidad();
+            resultado[0] = sucursal.getCapacidad();
+            resultado[1] = sucursal.getPersonasDentro();
+            return resultado;
         }
-        return -1;
+        resultado[0] = -1;
+        resultado[1] = -1;
+        return resultado;
     }
 
     @WebMethod
