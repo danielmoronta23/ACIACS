@@ -4,6 +4,7 @@ import ACIACS.DTO.DtoPersona;
 import ACIACS.encapsulaciones.*;
 import ACIACS.servicios.*;
 import ACIACS.util.EstadisticaVisitas;
+import ACIACS.util.EstatusAcceso;
 import ACIACS.util.EstatusModulo;
 import ACIACS.util.RolUsuario;
 
@@ -286,6 +287,26 @@ public class Controladora {
 
     public Usuario buscarUsuario(String s) {
         return servicioUsuario.buscar(s);
+    }
+
+    public Persona buscarPersona(String cedula) {
+        return servicioPersona.buscar(cedula);
+    }
+
+    public boolean agregarListaDeAcceso(ListaDeAccesso listaDeAccesso) {
+        return servicioListaDeAccesso.crear(listaDeAccesso);
+    }
+
+    public boolean eliminarPersonaListaDeAcceso(String id) {
+        return servicioListaDeAccesso.eliminar(id);
+    }
+    public boolean bloquearAcceso(String id){
+        ListaDeAccesso listaDeAccesso = servicioListaDeAccesso.buscar(id);
+        if(listaDeAccesso!=null){
+            listaDeAccesso.setEstatus(EstatusAcceso.Bloqueado);
+           return servicioListaDeAccesso.editar(listaDeAccesso);
+        }
+        return false;
     }
 }
 

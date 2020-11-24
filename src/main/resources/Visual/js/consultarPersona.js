@@ -42,6 +42,7 @@ function cargarDatosPersona(estado, datoPersona) {
     } else {
         // Se cargan los datos de las personas
         cedula.innerText = datoPersona.cedula;
+        cedula.value = datoPersona.cedula;
         primerNombre = datoPersona.primerNombre;
         segundoNombre = datoPersona.segundoNombre;
         primerApellido = datoPersona.primerApellido;
@@ -62,3 +63,18 @@ function buscarPersona() {
     console.log("Buscando persona...");
     consultarDesdeAPI();
 }
+function eliminar(cedula, id){
+
+    let bConfirmacion = document.getElementById("borrarCliente");
+    bConfirmacion.innerText = cedula;
+    bConfirmacion.value = cedula;
+    document.getElementById("cedulaEliminar").value = id;
+}
+function bloquear(cedula, id){
+
+    let bBloquear = document.getElementById("bloquearP");
+    bBloquear.innerText = cedula;
+    bBloquear.value = cedula;
+    document.getElementById("bloquear").value = id;
+}
+console.log("Entrando js de registerPriority...");

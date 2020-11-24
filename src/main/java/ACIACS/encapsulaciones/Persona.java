@@ -1,6 +1,7 @@
 package ACIACS.encapsulaciones;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -17,8 +18,8 @@ public class Persona {
     private String primerApellido;
     @Column(name = "Segundo_Apellido")
     private String SegundoApellido;
-    @OneToMany(mappedBy = "persona", fetch = FetchType.LAZY)
-    private Set<ListaDeAccesso> listaListaDeAccesso;
+    @OneToMany(mappedBy = "persona", fetch = FetchType.EAGER)
+    private Set<ListaDeAccesso> listaListaDeAccesso = new HashSet<ListaDeAccesso>();
     @Column(name = "Correo")
     private String correo;
 

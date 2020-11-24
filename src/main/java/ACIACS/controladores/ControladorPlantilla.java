@@ -1,9 +1,12 @@
 package ACIACS.controladores;
 
+import ACIACS.encapsulaciones.ListaDeAccesso;
+import ACIACS.encapsulaciones.Persona;
 import ACIACS.encapsulaciones.Sucursal;
 import ACIACS.encapsulaciones.Usuario;
 import ACIACS.logica.Controladora;
 import ACIACS.util.ControladorBase;
+import ACIACS.util.EstatusAcceso;
 import ACIACS.util.RolUsuario;
 import io.javalin.Javalin;
 import io.javalin.plugin.rendering.JavalinRenderer;
@@ -155,6 +158,82 @@ public class ControladorPlantilla extends ControladorBase {
                 } else {
                     ctx.redirect("/login");
                 }
+            });
+            get("/administar-PersonasPrioritarias",ctx -> {
+                Usuario usuario = null;
+                Map<String, Object> modelo = new HashMap<>();
+                Set<ListaDeAccesso> listaDeAccessos = new HashSet<>();
+                if (ctx.cookie("usuario") != null) {
+                    usuario = Controladora.getControladora().buscarUsuario(ctx.cookie("usuario"));
+                }
+                if (usuario != null) {
+                    listaDeAccessos = usuario.getEmpresa().getListaDeAccessos();
+                    modelo.put("listaPersona", listaDeAccessos);
+                    ctx.render("/Visual/registerPriority.html", modelo);
+                } else {
+                    ctx.redirect("/login");
+                }
+
+            });
+            post("/agregarPersona",ctx -> {
+                System.out.println("\n Entrado a agregar Persona ...");
+                Usuario usuario = null;
+                Map<String, Object> modelo = new HashMap<>();
+                String cedula = ctx.formParam("cedula");
+                String nombre = ctx.formParam("nombre");
+                String apellido = ctx.formParam("apellido");
+                String correo = ctx.formParam("correo");
+                if (ctx.cookie("usuario") != null) {
+                    usuario = Controladora.getControladora().buscarUsuario(ctx.cookie("usuario"));
+                }
+                if (usuario != null && cedula!=null) {
+                    ListaDeAccesso listaDeAccesso;
+                    Persona persona = Controladora.getControladora().buscarPersona(cedula);
+                    if(persona!=null){
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.setTime(new Date());
+                        calendar.add(Calendar.YEAR,2);
+                        listaDeAccesso = new ListaDeAccesso(persona,usuario.getEmpresa(), EstatusAcceso.Activo,new Date(), calendar.getTime());
+                        System.out.println("Se pudo agregar a la personas ? " +Controladora.getControladora().agregarListaDeAcceso(listaDeAccesso));
+                    }else{
+                        Controladora.getControladora().agregarPersona(new Persona(cedula,nombre,"",apellido,"",correo));
+                        Persona persona1 = Controladora.getControladora().buscarPersona(cedula);
+                        if(persona1!=null){
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.setTime(new Date());
+                            calendar.add(Calendar.YEAR,2);
+                            listaDeAccesso = new ListaDeAccesso(persona1,usuario.getEmpresa(), EstatusAcceso.Activo,new Date(), calendar.getTime());
+                            System.out.println("Se pudo agregar a la personas ? "  + Controladora.getControladora().agregarListaDeAcceso(listaDeAccesso));
+                        }
+                    }
+                    ctx.redirect("/administar-PersonasPrioritarias");
+                } else {
+                    ctx.redirect("/login");
+                }
+            });
+            post("/eliminarPersona",ctx -> {
+                Usuario usuario = null;
+                String id = ctx.formParam("cedula");
+                if (ctx.cookie("usuario") != null) {
+                    usuario = Controladora.getControladora().buscarUsuario(ctx.cookie("usuario"));
+                }
+                if (usuario != null && id!=null) {
+                    System.out.println("entrado para eliminar a personas de la lista de acceso: "+id);
+                    Controladora.getControladora().eliminarPersonaListaDeAcceso(id);
+                }
+                ctx.redirect("/administar-PersonasPrioritarias");
+            });
+            post("/bloquearPersona",ctx -> {
+                Usuario usuario = null;
+                String id = ctx.formParam("idAcceso");
+                if (ctx.cookie("usuario") != null) {
+                    usuario = Controladora.getControladora().buscarUsuario(ctx.cookie("usuario"));
+                }
+                if (usuario != null && id!=null) {
+                    System.out.println("entrado para eliminar a personas de la lista de acceso: "+id);
+                    Controladora.getControladora().bloquearAcceso(id);
+                }
+                ctx.redirect("/administar-PersonasPrioritarias");
             });
         });
 

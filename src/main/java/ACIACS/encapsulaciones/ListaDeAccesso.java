@@ -10,9 +10,10 @@ import java.util.Date;
 public class ListaDeAccesso implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String id;
     @ManyToOne
     private Persona persona;
-    @Id
     @ManyToOne
     private Empresa empresa;
     private EstatusAcceso estatus;
@@ -70,5 +71,13 @@ public class ListaDeAccesso implements Serializable {
 
     public void setFechaFin(Date fechaFin) {
         this.fechaFin = fechaFin;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

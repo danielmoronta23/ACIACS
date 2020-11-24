@@ -21,6 +21,8 @@ public class Empresa implements Serializable {
     private String descripcion;
     @Column(name = "fecha_Ingreso")
     private Date fechaIngreso;
+    @OneToMany(mappedBy = "empresa",fetch = FetchType.EAGER)
+    private Set<ListaDeAccesso> listaDeAccessos  = new HashSet<ListaDeAccesso>();
 
     public Empresa() {
     }
@@ -76,5 +78,21 @@ public class Empresa implements Serializable {
 
     public Date getFechaIngreso() {
         return fechaIngreso;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public void setFechaIngreso(Date fechaIngreso) {
+        this.fechaIngreso = fechaIngreso;
+    }
+
+    public Set<ListaDeAccesso> getListaDeAccessos() {
+        return listaDeAccessos;
+    }
+
+    public void setListaDeAccessos(Set<ListaDeAccesso> listaDeAccessos) {
+        this.listaDeAccessos = listaDeAccessos;
     }
 }
