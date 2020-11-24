@@ -198,7 +198,7 @@ function cargarDatosDesdeAPI(idSucursal) {
     let estadisticaMensual = "";
     let endpoint = "estadisticas"
     const Http = new XMLHttpRequest();
-    const url = location.protocol+location.hostname+':'+location.port+'/api-Rest/' + endpoint + "/" + idSucursal;
+    const url = location.protocol+"//"+location.hostname+':'+location.port+'/api-Rest/' + endpoint + "/" + idSucursal;
     Http.open("GET", url);
     Http.send();
     Http.onreadystatechange = function () {
