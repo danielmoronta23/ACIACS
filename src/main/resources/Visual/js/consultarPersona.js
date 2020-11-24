@@ -3,7 +3,7 @@ function consultarDesdeAPI() {
     let repuestaServidor = "";
     let endpoint = "buscarPersona"
     const Http = new XMLHttpRequest();
-    const url = 'http://'+location.hostname+':'+location.port+'/api-Rest/' + endpoint + "/" + cedula.value;
+    const url = location.protocol+location.hostname+':'+location.port+'/api-Rest/' + endpoint + "/" + cedula.value;
     Http.open("GET", url);
     Http.send();
     Http.onreadystatechange = function () {
