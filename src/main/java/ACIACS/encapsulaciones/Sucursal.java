@@ -2,6 +2,8 @@ package ACIACS.encapsulaciones;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -15,10 +17,11 @@ public class Sucursal implements Serializable {
    private int personasDentro;
    @Column(name = "capacidad")
    private int capacidad;
-   @OneToMany(mappedBy = "sucursal", fetch = FetchType.LAZY)
-   private Set<Modulo> listaModulo;
+   @OneToMany(mappedBy = "sucursal", fetch = FetchType.EAGER)
+   private Set<Modulo> listaModulo = new HashSet<>();
    @ManyToOne
    private Empresa empresa;
+   private Date fecha;
 
    public Sucursal() {
 
@@ -28,6 +31,7 @@ public class Sucursal implements Serializable {
       this.personasDentro = personasDentro;
       this.capacidad = capacidad;
       this.empresa = empresa;
+      this.fecha = new Date();
    }
 
    public Sucursal(String id, Ubicacion ubicacion, int capacidad) {
@@ -35,6 +39,7 @@ public class Sucursal implements Serializable {
       this.ubicacion = ubicacion;
       this.capacidad = capacidad;
       this.personasDentro = 0;
+      this.fecha = new Date();
    }
 
    public String getId() {
@@ -83,5 +88,13 @@ public class Sucursal implements Serializable {
 
    public void setEmpresa(Empresa empresa) {
       this.empresa = empresa;
+   }
+
+   public Date getFecha() {
+      return fecha;
+   }
+
+   public void setFecha(Date fecha) {
+      this.fecha = fecha;
    }
 }

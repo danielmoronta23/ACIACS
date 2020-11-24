@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th>
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -49,7 +49,7 @@
                         <img src="assets/img/LogoAPP.png" width="100" height="100" class="d-inline-block ml-5 mr-5"
                              alt=""></a>
                     <div class="sb-sidenav-menu-heading">Principal</div>
-                    <a class="nav-link" href="dashboard.html">
+                    <a class="nav-link" href="/administrador-comercial">
                         <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                         Panel de Control
                     </a>
@@ -98,7 +98,7 @@
             <div class="container-fluid">
                 <h1 class="mt-4">Sucursales</h1>
                 <ol class="breadcrumb mb-4 shadow">
-                    <li class="breadcrumb-item"><a href="dashboard.html">Panel de Control</a></li>
+                    <li class="breadcrumb-item"><a href="/administrador-comercial">Panel de Control</a></li>
                     <li class="breadcrumb-item active">Sucursales</li>
                 </ol>
 
@@ -127,51 +127,27 @@
                                         <tr>
                                             <th>ID</th>
                                             <th>Dirección</th>
-                                            <th>Ciudad</th>
-                                            <th>País</th>
                                             <th>Fecha de Registro</th>
                                             <th>Número de Módulos</th>
-                                            <th>Capacidad Máxima de Personas Dentro del Local</th>
+                                            <th>Capacidad Máx de Personas</th>
                                         </tr>
                                         </thead>
                                         <tfoot>
                                         <tr>
                                             <th>ID</th>
                                             <th>Dirección</th>
-                                            <th>Ciudad</th>
-                                            <th>País</th>
                                             <th>Fecha de Registro</th>
                                             <th>Número de Módulos</th>
-                                            <th>Capacidad Máxima de Personas Dentro del Local</th>
+                                            <th>Capacidad Máx de Personas</th>
                                         </tr>
                                         </tfoot>
                                         <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Kennedy</td>
-                                            <td>Santo Domingo</td>
-                                            <td>Rep. Dominicana</td>
-                                            <td>2011/06/27</td>
-                                            <td>4</td>
-                                            <td>312</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Calle del Sol</td>
-                                            <td>Santiago</td>
-                                            <td>Rep. Dominicana</td>
-                                            <td>2019/06/27</td>
-                                            <td>2</td>
-                                            <td>1200</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Av. Duarte</td>
-                                            <td>Navarrete, Santiago</td>
-                                            <td>Rep. Dominicana</td>
-                                            <td>2015/06/1</td>
-                                            <td>1</td>
-                                            <td>25</td>
+                                        <tr th:each="sucurales : ${listaSucursales}">
+                                            <td th:text="${sucurales.id}"></td>
+                                            <td th:text="${sucurales.ubicacion.dirrecion}"></td>
+                                            <td th:text="${sucurales.fecha}"></td>
+                                            <td th:text="${sucurales.listaModulo.size}"></td>
+                                            <td th:text="${sucurales.capacidad}"></td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -214,35 +190,35 @@
                 </button>
 
             </div>
+            <form method="post" action="/administrador-comercial/modificarCantSucursal">
             <div class="modal-body align-middle">
-                <form method="post" action="/ingresar">
+
                     <div class="row justify-content-center mt-2">
                         <div class="col-lg-5">
                             <div class="form-group">
-                                <select class="custom-select">
+                                <select class="custom-select" name="selectOption">
                                     <option selected>ID de Sucursal</option>
-                                    <option value="1">1</option>
+                                    <option th:each="sucursal, sucStatus: ${listaSucursales}" th:value="${sucursal.id}" th:text="${sucursal.id}"></option>
                                 </select>
                             </div>
                         </div>
 
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <input class="form-control" id="maxCap" name="maxCap" type="text" placeholder="Capacidad Máxima" required>
+                                <input class="form-control" id="maxCap" name="maxCap" type="number"  min="0" placeholder="Capacidad Máxima" required>
                             </div>
                         </div>
                     </div>
-                </form>
+
             </div>
             <div class="modal-body">
-
-
 
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-primary font-weight-bold">Guardar</button>
                 <button type="button" class="btn btn-danger font-weight-bold" data-dismiss="modal">Cerrar</button>
             </div>
+            </form>
         </div>
     </div>
 </div>

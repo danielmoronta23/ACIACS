@@ -3,6 +3,7 @@ package ACIACS.encapsulaciones;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -14,7 +15,7 @@ public class Empresa implements Serializable {
     private String id;
     private String nombre;
     @OneToMany(mappedBy = "empresa",fetch = FetchType.EAGER)
-    private List<Sucursal> listaSucursal;
+    private Set<Sucursal> listaSucursal = new HashSet<Sucursal>();
     @OneToMany(mappedBy = "empresa", fetch = FetchType.LAZY)
     private List<Usuario> listaUsuario;
     private String descripcion;
@@ -30,7 +31,7 @@ public class Empresa implements Serializable {
 
 
 
-    public Empresa(String nombre, List<Sucursal> listaSucursal, String descripcion) {
+    public Empresa(String nombre, Set<Sucursal> listaSucursal, String descripcion) {
         this.nombre = nombre;
         this.listaSucursal = listaSucursal;
         this.descripcion = descripcion;
@@ -53,11 +54,11 @@ public class Empresa implements Serializable {
         this.nombre = nombre;
     }
 
-    public List<Sucursal> getListaSucursal() {
+    public Set<Sucursal> getListaSucursal() {
         return listaSucursal;
     }
 
-    public void setListaSucursal(List<Sucursal> listaSucursal) {
+    public void setListaSucursal(Set<Sucursal> listaSucursal) {
         this.listaSucursal = listaSucursal;
     }
 

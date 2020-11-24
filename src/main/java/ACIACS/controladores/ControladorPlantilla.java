@@ -24,9 +24,9 @@ public class ControladorPlantilla extends ControladorBase {
         app.routes(() -> {
             // VISTA ESTATICA: Bienvenida.
             /**
-            get("/", ctx -> {
-                ctx.render("/Visual/index.html");
-            });
+             get("/", ctx -> {
+             ctx.render("/Visual/index.html");
+             });
              //VISTA DEL LOGIN
              **/
             get("/login", ctx -> {
@@ -55,10 +55,10 @@ public class ControladorPlantilla extends ControladorBase {
                     ctx.sessionAttribute("usuario", aux);
                     ctx.cookie("usuario", aux.getCorreo());
                     //PAGINA PRINCIPAL
-                    if (rolUsuario==RolUsuario.Admintrador_Comercial) {
+                    if (rolUsuario == RolUsuario.Admintrador_Comercial) {
                         System.out.println("administrador-comercial\n");
                         ctx.redirect("/administrador-comercial");
-                    } else if (rolUsuario==RolUsuario.Super_Admintrador) {
+                    } else if (rolUsuario == RolUsuario.Super_Admintrador) {
                         System.out.println("Super_Admintrador\n");
                         ctx.redirect("/root");
                     }
@@ -85,7 +85,6 @@ public class ControladorPlantilla extends ControladorBase {
                 });
             });
             path("/administrador-comercial", () -> {
-
                 before("/", ctx -> {
                     // VERIFICAR SI EXISTE COOKIE PARA ENTRAR A LA PAGINA PRINCIPAL O LLEVAR AL LOGIN
                     if (ctx.sessionAttribute("usuario") != null) {
@@ -97,13 +96,26 @@ public class ControladorPlantilla extends ControladorBase {
                 get("/", ctx -> {
                     Usuario usuario = Controladora.getControladora().buscarUsuario(ctx.cookie("usuario"));
                     Map<String, Object> modelo = new HashMap<>();
-                    List<Sucursal> sucursalList;
-                    if(usuario!=null){
+                    Set<Sucursal> sucursalList;
+                    if (usuario != null) {
                         sucursalList = usuario.getEmpresa().getListaSucursal();
                         System.out.println("Entrando a dashboard");
-                        modelo.put("rol",usuario.getRolUsuario().toString());
-                        modelo.put("listaSucursales",sucursalList);
+                        modelo.put("rol", usuario.getRolUsuario().toString());
+                        modelo.put("listaSucursales", sucursalList);
                         ctx.render("/Visual/dashboard.html", modelo);
+                    }
+                });
+                post("/modificarCantSucursal", ctx -> {
+                    String idSucursal = ctx.formParam("selectOption");
+                    boolean estatus = false;
+                    int capacidad = Integer.parseInt(ctx.formParam("maxCap"));
+                    if(capacidad>0){
+                        Sucursal sucursal = Controladora.getControladora().buscarSucursal(idSucursal);
+                        if(sucursal!=null){
+                            sucursal.setCapacidad(capacidad);
+                            estatus = Controladora.getControladora().actualizarSucursal(sucursal);
+                        }
+                        ctx.redirect("/administracion-sucursal");
                     }
                 });
             });
@@ -114,10 +126,10 @@ public class ControladorPlantilla extends ControladorBase {
                 String nombreEmpresa = ctx.formParam("nombreEmpresa");
                 String RNCEmpresa = ctx.formParam("nombreEmpresa");
                 modelo.put("Error", "No se pudo crear la Empresa, intento mas tarde.");
-                if(correo!=null && pass!=null && nombreEmpresa!=null){
-                    if(Controladora.getControladora().agregarEmpresa(nombreEmpresa, correo, pass)){
+                if (correo != null && pass != null && nombreEmpresa != null) {
+                    if (Controladora.getControladora().agregarEmpresa(nombreEmpresa, correo, pass)) {
                         ctx.redirect("/login");
-                    }else{
+                    } else {
                         ctx.render("/Visual/register.html");
                     }
                 }
@@ -126,7 +138,24 @@ public class ControladorPlantilla extends ControladorBase {
             get("/registro-de-empresa", ctx -> {
                 ctx.render("/Visual/register.html");
             });
+            get("/administracion-sucursal", ctx -> {
+                Usuario usuario = null;
+                if (ctx.cookie("usuario") != null) {
+                    usuario = Controladora.getControladora().buscarUsuario(ctx.cookie("usuario"));
 
+                }
+                Map<String, Object> modelo = new HashMap<>();
+                Set<Sucursal> sucursalList;
+                if (usuario != null) {
+                    sucursalList = usuario.getEmpresa().getListaSucursal();
+                    System.out.println("Entrando a sucursales desde administrador comercial... "+usuario.getEmpresa().getListaSucursal().size());
+                    modelo.put("rol", usuario.getRolUsuario().toString());
+                    modelo.put("listaSucursales", sucursalList);
+                    ctx.render("/Visual/sucursales.html", modelo);
+                } else {
+                    ctx.redirect("/login");
+                }
+            });
         });
 
     }

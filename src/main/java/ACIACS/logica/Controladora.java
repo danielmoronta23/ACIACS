@@ -105,11 +105,12 @@ public class Controladora {
 
     public void datosPruebas() throws ParseException {
         agregarEmpresa(new Empresa("SuperMecado El Pueblo", new Date()));
-        agregarSucursal(new Sucursal(new Ubicacion("","","Navarrete"), 0, 100, buscarEmpresa("1")));
-        agregarSucursal(new Sucursal(new Ubicacion("","","La Vega"), 0, 100, buscarEmpresa("1")));
-
-        agregarModulo(new ModuloNormal(EstatusModulo.Activo, buscarSucursal("1")));
-        agregarModulo(new ModuloPrioridad(EstatusModulo.Activo, buscarSucursal("1")));
+        agregarSucursal(new Sucursal(new Ubicacion("", "", "Navarrete"), 0, 100, buscarEmpresa("1")));
+        Sucursal sucursal1 = new Sucursal(new Ubicacion("", "", "La Vega"), 0, 200, buscarEmpresa("1"));
+        agregarSucursal(sucursal1);
+        servicioModuloNormal.crear(new ModuloNormal(EstatusModulo.Activo, buscarSucursal("1")));
+        servicioModuloPrioritario.crear(new ModuloPrioridad(EstatusModulo.Activo, buscarSucursal("1")));
+        // servicioModuloNormal.crear(new ModuloNormal(EstatusModulo.Activo, buscarSucursal("1")));
 
         TestingNormal aux = new TestingNormal(false, 100, new Date(), servicioModuloNormal.buscar("1"));
         agregarTesting(aux);
@@ -278,13 +279,13 @@ public class Controladora {
     public boolean agregarEmpresa(String nombreEmpresa, String correoAdministrador, String passwodAdmistrador) {
         Empresa empresa = servicioEmpresa.crearEmpresa(new Empresa(nombreEmpresa, new Date()));
         if (empresa != null) {
-           return servicioUsuario.crear(new Usuario(correoAdministrador, passwodAdmistrador, RolUsuario.Admintrador_Comercial, empresa));
+            return servicioUsuario.crear(new Usuario(correoAdministrador, passwodAdmistrador, RolUsuario.Admintrador_Comercial, empresa));
         }
         return false;
     }
 
     public Usuario buscarUsuario(String s) {
-       return servicioUsuario.buscar(s);
+        return servicioUsuario.buscar(s);
     }
 }
 
