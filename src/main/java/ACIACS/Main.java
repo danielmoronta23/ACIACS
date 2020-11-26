@@ -31,6 +31,6 @@ public class Main {
         /**
          *        WebSocket
          */
-        new ControladorWebSocket(app).aplicarRutas();
+       // new ControladorWebSocket(app).aplicarRutas();
     }
 }
