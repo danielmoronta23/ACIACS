@@ -340,6 +340,12 @@ public class ControladorPlantilla extends ControladorBase {
                     ctx.render("/Visual/ConfSucursales.html", modelo);
                 }
             });
+
+            //  Error 404.
+            app.error(404, ctx -> {
+                //ctx.result("Generic 404 message");
+                ctx.render("/Visual/404.html");
+            });
         });
 
     }
