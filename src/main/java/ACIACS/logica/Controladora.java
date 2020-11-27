@@ -105,10 +105,12 @@ public class Controladora {
     }
 
     public void datosPruebas() throws ParseException {
-        if(buscarUsuario("administrador@ACIACIS.com")==null) {
+
+      // System.out.println( servicioModulo.modulosActivos(true));
+        if(buscarUsuario("administrador-ROOT@ACIACIS.com")==null) {
 
 
-            agregarEmpresa(new Empresa("SuperMecado El Pueblo", new Date()));
+            agregarEmpresa(new Empresa("SuperMercado El Pueblo", new Date()));
             agregarSucursal(new Sucursal(new Ubicacion("", "", "Navarrete"), 0, 100, buscarEmpresa("1")));
             Sucursal sucursal1 = new Sucursal(new Ubicacion("", "", "La Vega"), 0, 200, buscarEmpresa("1"));
             agregarSucursal(sucursal1);
@@ -131,13 +133,14 @@ public class Controladora {
             sucursal.setPersonasDentro(20);
             actualizarSucursal(sucursal);
 
-
             //agregarUsuario
-            Usuario a = new Usuario("danielmoronta23@hotmail.com", "dpmACIACS", RolUsuario.Admintrador_Comercial, buscarEmpresa("1"));
+            Usuario a = new Usuario("superMercado-El-Pueblo@ACIACS.com", "dpmACIACS", RolUsuario.Admintrador_Comercial, buscarEmpresa("1"));
             agregarUsuario(a);
             //agregarUsuario
-            Usuario root = new Usuario("administrador@ACIACIS.com", "rootACIACS", RolUsuario.Super_Admintrador, null);
+            Usuario root = new Usuario("administrador-ROOT@ACIACIS.com", "rootACIACS", RolUsuario.Super_Admintrador, null);
             agregarUsuario(root);
+
+            // System.out.println("CANT MODULO NORMALES ACTIVO: "+servicioModulo.cantModulos(false, EstatusModulo.Activo));
         }
     }
 
