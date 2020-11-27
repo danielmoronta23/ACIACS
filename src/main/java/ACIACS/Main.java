@@ -24,13 +24,9 @@ public class Main {
             throwables.printStackTrace();
         }
         new ControladorSOAP(app).aplicarRutas();
-        //new ApiRest(app).aplicarRutas();
+        new ApiRest(app).aplicarRutas();
         new ControladorPlantilla(app).aplicarRutas();
 
         app.start(7000);
-        /**
-         *        WebSocket
-         */
-       // new ControladorWebSocket(app).aplicarRutas();
     }
 }
