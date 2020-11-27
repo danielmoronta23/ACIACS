@@ -2,6 +2,7 @@ package ACIACS.controladores;
 
 import ACIACS.encapsulaciones.*;
 import ACIACS.logica.Controladora;
+import ACIACS.servicios.ServicioEmpresa;
 import ACIACS.servicios.ServicioModulo;
 import ACIACS.servicios.ServicioSucursal;
 import ACIACS.util.ControladorBase;
@@ -84,8 +85,13 @@ public class ControladorPlantilla extends ControladorBase {
                     }
                 });
                 get("/", ctx -> {
+                    Map<String, Object> modelo = new HashMap<>();
                     System.out.println("Entrando a root");
-                    ctx.render("/Visual/root.html");
+                    modelo.put("totalModulos", new ServicioModulo().cantModulos());
+                    modelo.put("totalModulosNormalesActivos", new ServicioModulo().cantModulos(true,EstatusModulo.Activo));
+                    modelo.put("totalModulosPrioritarioActivos", new ServicioModulo().cantModulos(false,EstatusModulo.Activo));
+                    modelo.put("listaSucursal",new ServicioEmpresa().explorarTodo());
+                    ctx.render("/Visual/root.html", modelo);
                 });
             });
             path("/administrador-comercial", () -> {

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -70,8 +70,8 @@
                     <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
                          data-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="ConfModulos.html">Módulos</a>
-                            <a class="nav-link" href="ConfSucursales.html">Sucursales de Empresas</a>
+                            <a class="nav-link" href="/root-ConfModulos">Módulos</a>
+                            <a class="nav-link" href="root-ConfSucursales">Sucursales de Empresas</a>
                         </nav>
                     </div>
                 </div>
@@ -90,7 +90,6 @@
                 <h3 class=" mt-4 font-weight-bold align-top mr-5 ">Panel de Control</h3>
 
 
-
                 <div class="row">
 
                     <!-- Permitidos Card -->
@@ -100,7 +99,7 @@
                                 <div class="text-xs  font-weight-bold text-danger text-uppercase mb-1">
                                     Total de Modulos
                                 </div>
-                                <div class="h5 mb-0  font-weight-bold"></div>
+                                <div class="h5 mb-0  font-weight-bold" th:text="${totalModulos}"></div>
                             </div>
                         </div>
                     </div>
@@ -112,12 +111,10 @@
                                 <div class="text-xs  font-weight-bold text-success text-uppercase mb-1">
                                     Modulos Normales Activos
                                 </div>
-                                <div class="h5 mb-0  font-weight-bold"></div>
+                                <div class="h5 mb-0  font-weight-bold" th:text="${totalModulosNormalesActivos}"></div>
                             </div>
                         </div>
                     </div>
-
-
 
                     <!-- Prioridad Permitidos Card -->
                     <div class="col-lg-4 mb-4">
@@ -126,7 +123,8 @@
                                 <div class="text-xs font-weight-bold  text-primary text-uppercase mb-1">
                                     Modulos Prioritarios Activos
                                 </div>
-                                <div class="h5 mb-0 font-weight-bold "></div>
+                                <div class="h5 mb-0 font-weight-bold "
+                                     th:text="${totalModulosPrioritarioActivos}"></div>
                             </div>
                         </div>
                     </div>
@@ -144,56 +142,41 @@
                     <div class="col-lg-12">
                         <div class="card mb-4 shadow">
                             <div class="card-body">
-                                <div id="accordion">
+                                <div id="accordion"  th:each="p : ${listaSucursal}">
                                     <div class="card">
-                                        <div class="card-header" id="headingOne">
+                                        <div class="card-header" th:id="'heading'+${p.id}">
                                             <h5 class="mb-0">
-                                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                    Empresa #1
+                                                <button class="btn btn-link" data-toggle="collapse"
+                                                        th:data-target="'#collapse'+${p.id}" aria-expanded="true"
+                                                        aria-controls="1" th:text="'Empresa: '+${p.nombre}">
                                                 </button>
                                             </h5>
                                         </div>
 
-                                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                                        <div th:id="'collapse'+${p.id}" class="collapse show" th:aria-labelledby="'heading'+${p.id}"
+                                             data-parent="#accordion">
                                             <div class="card-body">
 
                                                 <div class="card">
                                                     <div class="table">
-                                                        <table class="table table-bordered" width="100%" cellspacing="0">
+                                                        <table class="table table-bordered" width="100%"
+                                                               cellspacing="0">
                                                             <thead>
-                                                            <tr>
+                                                            <tr >
                                                                 <th>ID</th>
-                                                                <th>Sucursales</th>
-                                                                <th>Módulos Normales</th>
-                                                                <th>Módulos con Prioridad</th>
+                                                                <th>Sucursal</th>
+                                                                <th>Capacidad</th>
                                                                 <th>Total de Módulos</th>
                                                                 <th>Subscrito Desde</th>
                                                             </tr>
                                                             </thead>
                                                             <tbody>
-                                                            <tr>
-                                                                <td>1</td>
-                                                                <td>Kennedy</td>
-                                                                <td>Santo Domingo</td>
-                                                                <td>Rep. Dominicana</td>
-                                                                <td>4</td>
-                                                                <td>2011/06/27</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>1</td>
-                                                                <td>Kennedy</td>
-                                                                <td>Santo Domingo</td>
-                                                                <td>Rep. Dominicana</td>
-                                                                <td>7</td>
-                                                                <td>2011/06/27</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>1</td>
-                                                                <td>Kennedy</td>
-                                                                <td>Santo Domingo</td>
-                                                                <td>Rep. Dominicana</td>
-                                                                <td>88</td>
-                                                                <td>2011/06/27</td>
+                                                            <tr  th:each="s : ${p.listaSucursal}">
+                                                                <td th:text="${p.id}"></td>
+                                                                <td th:text="${s.ubicacion.dirrecion}"></td>
+                                                                <td th:text="${s.listaModulo.size}"></td>
+                                                                <td th:text="${s.capacidad}"></td>
+                                                                <td th:text="${p.fechaIngreso}"></td>
                                                             </tr>
                                                             </tbody>
                                                         </table>
@@ -203,19 +186,24 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <!--
                                     <div class="card">
                                         <div class="card-header" id="headingThree">
                                             <h5 class="mb-0">
-                                                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                <button class="btn btn-link collapsed" data-toggle="collapse"
+                                                        data-target="#collapseThree" aria-expanded="false"
+                                                        aria-controls="collapseThree">
                                                     Empresa #2
                                                 </button>
                                             </h5>
                                         </div>
-                                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+                                             data-parent="#accordion">
                                             <div class="card-body">
                                                 <div class="card">
                                                     <div class="table">
-                                                        <table class="table table-bordered" width="100%" cellspacing="0">
+                                                        <table class="table table-bordered" width="100%"
+                                                               cellspacing="0">
                                                             <thead>
                                                             <tr>
                                                                 <th>ID</th>
@@ -258,6 +246,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    -->
                                 </div>
                             </div>
                         </div>
@@ -269,7 +258,7 @@
         <footer class="py-4 bg-light mt-auto">
             <div class="container-fluid">
                 <div class="d-flex align-items-center justify-content-between small">
-                    <div class="text-muted">Copyright ACIACS&copy; Your Website 2020</div>
+                    <div class="text-muted">Copyright ACIACS&copy; 2020</div>
                     <div>
                         <a href="#">Privacy Policy</a>
                         &middot;
