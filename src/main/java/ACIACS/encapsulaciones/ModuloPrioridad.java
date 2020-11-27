@@ -20,11 +20,11 @@ public class ModuloPrioridad extends Modulo implements Serializable {
     }
 
     public ModuloPrioridad(EstatusModulo estatus, Sucursal sucursal) {
-        super(estatus, sucursal);
+        super(estatus, sucursal,false);
     }
 
     public ModuloPrioridad(EstatusModulo estatus, Sucursal sucursal, Set<TestingPriority> listaTestingPriority) {
-        super(estatus, sucursal);
+        super(estatus, sucursal,false);
         this.listaTestingPriority = listaTestingPriority;
     }
 

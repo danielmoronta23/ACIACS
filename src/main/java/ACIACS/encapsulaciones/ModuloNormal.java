@@ -4,6 +4,7 @@ import ACIACS.util.EstatusModulo;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -12,18 +13,18 @@ import java.util.Set;
 public class ModuloNormal extends Modulo implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @OneToMany(mappedBy = "moduloNormal", fetch = FetchType.LAZY)
-    private Set<TestingNormal> listaTesting;
+    @OneToMany(mappedBy = "moduloNormal", fetch = FetchType.EAGER)
+    private Set<TestingNormal> listaTesting = new HashSet<>();
 
     public ModuloNormal() {
         super();
     }
     public ModuloNormal(EstatusModulo estatus, Sucursal sucursal) {
-        super(estatus, sucursal);
+        super(estatus, sucursal,true);
     }
 
     public ModuloNormal(EstatusModulo estatus, Sucursal sucursal, Set<TestingNormal> listaTesting) {
-        super(estatus, sucursal);
+        super(estatus, sucursal, true);
         this.listaTesting = listaTesting;
     }
 

@@ -16,13 +16,15 @@ public class Modulo implements Serializable {
     @JsonIgnore
     @ManyToOne
     private Sucursal sucursal;
+    private boolean tipo;
 
     public Modulo() {
     }
 
-    public Modulo(EstatusModulo estatus, Sucursal sucursal) {
+    public Modulo(EstatusModulo estatus, Sucursal sucursal, boolean tipo) {
         this.estatus = estatus;
         this.sucursal = sucursal;
+        this.tipo = tipo;
     }
 
     public String getId() {
@@ -47,5 +49,13 @@ public class Modulo implements Serializable {
 
     public void setSucursal(Sucursal sucursal) {
         this.sucursal = sucursal;
+    }
+
+    public boolean isTipo() {
+        return tipo;
+    }
+
+    public void setTipo(boolean tipo) {
+        this.tipo = tipo;
     }
 }

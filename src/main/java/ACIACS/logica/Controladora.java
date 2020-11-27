@@ -120,6 +120,9 @@ public class Controladora {
 
         Persona persona = new Persona("402-1409395-3", "Daniel ", "", "P", "Moronta", "danielmoronta23@hotmail.com");
         agregarPersona(persona);
+
+
+
         TestingPriority aux2 = new TestingPriority(false, 39, new Date(), servicioPersona.buscar("402-1409395-3"), servicioModuloPrioritario.buscar("2"));
         agregarTesting(aux2);
         Sucursal sucursal = buscarSucursal("1");
@@ -128,8 +131,11 @@ public class Controladora {
 
 
         //agregarUsuario
-        Usuario a = new Usuario("danielmoronta23@hotmail.com", "dmpACIACIS", RolUsuario.Admintrador_Comercial, buscarEmpresa("1"));
+        Usuario a = new Usuario("danielmoronta23@hotmail.com", "dmpACIACS", RolUsuario.Admintrador_Comercial, buscarEmpresa("1"));
         agregarUsuario(a);
+        //agregarUsuario
+        Usuario root = new Usuario("administrador@ACIACIS.com", "rootACIACS", RolUsuario.Super_Admintrador, null);
+        agregarUsuario(root);
     }
 
     private boolean agregarUsuario(Usuario a) {

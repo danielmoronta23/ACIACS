@@ -1,16 +1,16 @@
 package ACIACS.controladores;
 
-import ACIACS.encapsulaciones.ListaDeAccesso;
-import ACIACS.encapsulaciones.Persona;
-import ACIACS.encapsulaciones.Sucursal;
-import ACIACS.encapsulaciones.Usuario;
+import ACIACS.encapsulaciones.*;
 import ACIACS.logica.Controladora;
+import ACIACS.servicios.ServicioModulo;
 import ACIACS.util.ControladorBase;
 import ACIACS.util.EstatusAcceso;
+import ACIACS.util.EstatusModulo;
 import ACIACS.util.RolUsuario;
 import io.javalin.Javalin;
 import io.javalin.plugin.rendering.JavalinRenderer;
 import io.javalin.plugin.rendering.template.JavalinThymeleaf;
+import javassist.expr.NewArray;
 
 import java.util.*;
 
@@ -112,9 +112,9 @@ public class ControladorPlantilla extends ControladorBase {
                     String idSucursal = ctx.formParam("selectOption");
                     boolean estatus = false;
                     int capacidad = Integer.parseInt(ctx.formParam("maxCap"));
-                    if(capacidad>0){
+                    if (capacidad > 0) {
                         Sucursal sucursal = Controladora.getControladora().buscarSucursal(idSucursal);
-                        if(sucursal!=null){
+                        if (sucursal != null) {
                             sucursal.setCapacidad(capacidad);
                             estatus = Controladora.getControladora().actualizarSucursal(sucursal);
                         }
@@ -151,7 +151,7 @@ public class ControladorPlantilla extends ControladorBase {
                 Set<Sucursal> sucursalList;
                 if (usuario != null) {
                     sucursalList = usuario.getEmpresa().getListaSucursal();
-                    System.out.println("Entrando a sucursales desde administrador comercial... "+usuario.getEmpresa().getListaSucursal().size());
+                    System.out.println("Entrando a sucursales desde administrador comercial... " + usuario.getEmpresa().getListaSucursal().size());
                     modelo.put("rol", usuario.getRolUsuario().toString());
                     modelo.put("listaSucursales", sucursalList);
                     ctx.render("/Visual/sucursales.html", modelo);
@@ -159,7 +159,7 @@ public class ControladorPlantilla extends ControladorBase {
                     ctx.redirect("/login");
                 }
             });
-            get("/administar-PersonasPrioritarias",ctx -> {
+            get("/administar-PersonasPrioritarias", ctx -> {
                 Usuario usuario = null;
                 Map<String, Object> modelo = new HashMap<>();
                 Set<ListaDeAccesso> listaDeAccessos = new HashSet<>();
@@ -175,7 +175,7 @@ public class ControladorPlantilla extends ControladorBase {
                 }
 
             });
-            post("/agregarPersona",ctx -> {
+            post("/agregarPersona", ctx -> {
                 System.out.println("\n Entrado a agregar Persona ...");
                 Usuario usuario = null;
                 Map<String, Object> modelo = new HashMap<>();
@@ -186,24 +186,24 @@ public class ControladorPlantilla extends ControladorBase {
                 if (ctx.cookie("usuario") != null) {
                     usuario = Controladora.getControladora().buscarUsuario(ctx.cookie("usuario"));
                 }
-                if (usuario != null && cedula!=null) {
+                if (usuario != null && cedula != null) {
                     ListaDeAccesso listaDeAccesso;
                     Persona persona = Controladora.getControladora().buscarPersona(cedula);
-                    if(persona!=null){
+                    if (persona != null) {
                         Calendar calendar = Calendar.getInstance();
                         calendar.setTime(new Date());
-                        calendar.add(Calendar.YEAR,2);
-                        listaDeAccesso = new ListaDeAccesso(persona,usuario.getEmpresa(), EstatusAcceso.Activo,new Date(), calendar.getTime());
-                        System.out.println("Se pudo agregar a la personas ? " +Controladora.getControladora().agregarListaDeAcceso(listaDeAccesso));
-                    }else{
-                        Controladora.getControladora().agregarPersona(new Persona(cedula,nombre,"",apellido,"",correo));
+                        calendar.add(Calendar.YEAR, 2);
+                        listaDeAccesso = new ListaDeAccesso(persona, usuario.getEmpresa(), EstatusAcceso.Activo, new Date(), calendar.getTime());
+                        System.out.println("Se pudo agregar a la personas ? " + Controladora.getControladora().agregarListaDeAcceso(listaDeAccesso));
+                    } else {
+                        Controladora.getControladora().agregarPersona(new Persona(cedula, nombre, "", apellido, "", correo));
                         Persona persona1 = Controladora.getControladora().buscarPersona(cedula);
-                        if(persona1!=null){
+                        if (persona1 != null) {
                             Calendar calendar = Calendar.getInstance();
                             calendar.setTime(new Date());
-                            calendar.add(Calendar.YEAR,2);
-                            listaDeAccesso = new ListaDeAccesso(persona1,usuario.getEmpresa(), EstatusAcceso.Activo,new Date(), calendar.getTime());
-                            System.out.println("Se pudo agregar a la personas ? "  + Controladora.getControladora().agregarListaDeAcceso(listaDeAccesso));
+                            calendar.add(Calendar.YEAR, 2);
+                            listaDeAccesso = new ListaDeAccesso(persona1, usuario.getEmpresa(), EstatusAcceso.Activo, new Date(), calendar.getTime());
+                            System.out.println("Se pudo agregar a la personas ? " + Controladora.getControladora().agregarListaDeAcceso(listaDeAccesso));
                         }
                     }
                     ctx.redirect("/administar-PersonasPrioritarias");
@@ -211,29 +211,85 @@ public class ControladorPlantilla extends ControladorBase {
                     ctx.redirect("/login");
                 }
             });
-            post("/eliminarPersona",ctx -> {
+            post("/eliminarPersona", ctx -> {
                 Usuario usuario = null;
                 String id = ctx.formParam("cedula");
                 if (ctx.cookie("usuario") != null) {
                     usuario = Controladora.getControladora().buscarUsuario(ctx.cookie("usuario"));
                 }
-                if (usuario != null && id!=null) {
-                    System.out.println("entrado para eliminar a personas de la lista de acceso: "+id);
+                if (usuario != null && id != null) {
+                    System.out.println("entrado para eliminar a personas de la lista de acceso: " + id);
                     Controladora.getControladora().eliminarPersonaListaDeAcceso(id);
                 }
                 ctx.redirect("/administar-PersonasPrioritarias");
             });
-            post("/bloquearPersona",ctx -> {
+            post("/bloquearPersona", ctx -> {
                 Usuario usuario = null;
                 String id = ctx.formParam("idAcceso");
                 if (ctx.cookie("usuario") != null) {
                     usuario = Controladora.getControladora().buscarUsuario(ctx.cookie("usuario"));
                 }
-                if (usuario != null && id!=null) {
-                    System.out.println("entrado para eliminar a personas de la lista de acceso: "+id);
+                if (usuario != null && id != null) {
+                    System.out.println("entrado para eliminar a personas de la lista de acceso: " + id);
                     Controladora.getControladora().bloquearAcceso(id);
                 }
                 ctx.redirect("/administar-PersonasPrioritarias");
+            });
+            get("/root-ConfModulos", ctx -> {
+                if (ctx.sessionAttribute("usuario") != null) {
+                    //
+                    Usuario usuario = null;
+                    Map<String, Object> modelo = new HashMap<>();
+                    List<Modulo> listaModulo = new ArrayList<>();
+                    listaModulo = new ServicioModulo().explorarTodo();
+                    modelo.put("listaModulo", listaModulo);
+                    System.out.println("Entrando a root-confModulos");
+                    ctx.render("/Visual/ConfModulos.html", modelo);
+                } else {
+                    ctx.redirect("/login");
+                }
+            });
+            post("/root-ConfModulos", ctx -> {
+                if (ctx.sessionAttribute("usuario") != null) {
+                    //
+                    String sucursal = ctx.formParam("sucursal");
+                    String modo = ctx.formParam("modo");
+                    Usuario usuario = null;
+                    Sucursal sucursal1 = null;
+                    Boolean estatus = false;
+                    if (sucursal != null) {
+                        sucursal1 = Controladora.getControladora().buscarSucursal(sucursal);
+                    }
+                    if (sucursal1 != null) {
+                        if (modo != null) {
+                            if (modo.equalsIgnoreCase("1")) {
+                                /// normal
+                                ModuloNormal moduloNormal = new ModuloNormal(EstatusModulo.Activo, sucursal1);
+                                estatus = Controladora.getControladora().agregarModulo(moduloNormal);
+                                System.out.println("Intentado agregar modulo normal..");
+                            } else if (modo.equalsIgnoreCase("2")) {
+                                //prioritario
+                                ModuloPrioridad moduloPrioridad = new ModuloPrioridad(EstatusModulo.Activo, sucursal1);
+                                estatus = Controladora.getControladora().agregarModulo(moduloPrioridad);
+                                System.out.println("Intentado agregar modulo Prioritario...");
+
+                            }
+                        }
+                    }
+                    Map<String, Object> modelo = new HashMap<>();
+                    List<Modulo> listaModulo = new ArrayList<>();
+                    listaModulo = new ServicioModulo().explorarTodo();
+                    String info = "";
+                    if(estatus){
+                       info = "Se ha creado el modulo de forma sactifactoria!";
+                    }
+                    modelo.put("Info",info);
+                    modelo.put("listaModulo", listaModulo);
+                    System.out.println("Entrando a root-confModulos");
+                    ctx.render("/Visual/ConfModulos.html", modelo);
+                } else {
+                    ctx.redirect("/login");
+                }
             });
         });
 
