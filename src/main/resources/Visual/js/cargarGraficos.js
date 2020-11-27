@@ -7,7 +7,6 @@ function cargarGraficaVisitasPorHora(visitasNoramalesAceptadas, visitaNormalesDe
     var ctxPrioritario = document.getElementById("chartP");
     let maximoVisitasNormales = 5;
     let maximoVisitasPrioritaria = 5
-    let maximo = 5;
     if (visitasTotales > 0) {
         if (Math.max.apply(null, visitasNoramalesAceptadas) > Math.max.apply(null, visitaNormalesDenegadas)) {
             maximoVisitasNormales = Math.max.apply(null, visitasNoramalesAceptadas);
@@ -19,11 +18,6 @@ function cargarGraficaVisitasPorHora(visitasNoramalesAceptadas, visitaNormalesDe
             maximoVisitasPrioritaria = Math.max.apply(null, visitasPrioritariaAceptada);
         } else {
             maximoVisitasPrioritaria = Math.max.apply(null, visitasPrioritariaAceptada);
-        }
-        if (maximoVisitasNormales > maximoVisitasPrioritaria) {
-            maximo = maximoVisitasNormales;
-        } else {
-            maximo = maximoVisitasPrioritaria
         }
 
     }
@@ -101,7 +95,7 @@ function cargarGraficaVisitasPorHora(visitasNoramalesAceptadas, visitaNormalesDe
                 yAxes: [{
                     ticks: {
                         min: 0,
-                        max: maximo,
+                        max: maximoVisitasNormales,
                         maxTicksLimit: 5
                     },
                     gridLines: {
@@ -164,7 +158,7 @@ function cargarGraficaVisitasPorHora(visitasNoramalesAceptadas, visitaNormalesDe
                 yAxes: [{
                     ticks: {
                         min: 0,
-                        max: maximo,
+                        max: maximoVisitasPrioritaria,
                         maxTicksLimit: 5
                     },
                     gridLines: {
@@ -192,13 +186,14 @@ function cargarTotalesDeVisitas(a, b, c, d) {
 }
 
 function cargarDatosDesdeAPI(idSucursal) {
+    let fecha = document.getElementById("date-input").value;
     let pro = "";
     let estadisticas = "";
     let estadisticaHoy = "";
     let estadisticaMensual = "";
     let endpoint = "estadisticas"
     const Http = new XMLHttpRequest();
-    const url = location.protocol+"//"+location.hostname+':'+location.port+'/api-Rest/' + endpoint + "/" + idSucursal;
+    const url = location.protocol + "//" + location.hostname + ':' + location.port + '/api-Rest/' + endpoint + "/" + idSucursal + "/" + fecha;
     Http.open("GET", url);
     Http.send();
     Http.onreadystatechange = function () {

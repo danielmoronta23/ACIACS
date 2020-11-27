@@ -82,8 +82,8 @@ public class Controladora {
         return servicioEmpresa.buscar(id);
     }
 
-    private List<Testing> pruebasRealizadasHoy(String sucursal) throws ParseException {
-        return servicioSucursal.pruebasRealizadasPorFecha(new Date(), sucursal);
+    private List<Testing> pruebasRealizadasHoy(String sucursal, Date fecha) throws ParseException {
+        return servicioSucursal.pruebasRealizadasPorFecha(fecha, sucursal);
     }
 
     public boolean agregarPersona(Persona persona) {
@@ -105,44 +105,47 @@ public class Controladora {
     }
 
     public void datosPruebas() throws ParseException {
-        agregarEmpresa(new Empresa("SuperMecado El Pueblo", new Date()));
-        agregarSucursal(new Sucursal(new Ubicacion("", "", "Navarrete"), 0, 100, buscarEmpresa("1")));
-        Sucursal sucursal1 = new Sucursal(new Ubicacion("", "", "La Vega"), 0, 200, buscarEmpresa("1"));
-        agregarSucursal(sucursal1);
-        servicioModuloNormal.crear(new ModuloNormal(EstatusModulo.Activo, buscarSucursal("1")));
-        servicioModuloPrioritario.crear(new ModuloPrioridad(EstatusModulo.Activo, buscarSucursal("1")));
-        // servicioModuloNormal.crear(new ModuloNormal(EstatusModulo.Activo, buscarSucursal("1")));
-
-        TestingNormal aux = new TestingNormal(false, 100, new Date(), servicioModuloNormal.buscar("1"));
-        agregarTesting(aux);
-        TestingNormal aux1 = new TestingNormal(false, 100, new Date(), servicioModuloNormal.buscar("1"));
-        agregarTesting(aux1);
-
-        Persona persona = new Persona("402-1409395-3", "Daniel ", "", "P", "Moronta", "danielmoronta23@hotmail.com");
-        agregarPersona(persona);
+        if(buscarUsuario("administrador@ACIACIS.com")==null) {
 
 
+            agregarEmpresa(new Empresa("SuperMecado El Pueblo", new Date()));
+            agregarSucursal(new Sucursal(new Ubicacion("", "", "Navarrete"), 0, 100, buscarEmpresa("1")));
+            Sucursal sucursal1 = new Sucursal(new Ubicacion("", "", "La Vega"), 0, 200, buscarEmpresa("1"));
+            agregarSucursal(sucursal1);
+            servicioModuloNormal.crear(new ModuloNormal(EstatusModulo.Activo, buscarSucursal("1")));
+            servicioModuloPrioritario.crear(new ModuloPrioridad(EstatusModulo.Activo, buscarSucursal("1")));
+            // servicioModuloNormal.crear(new ModuloNormal(EstatusModulo.Activo, buscarSucursal("1")));
 
-        TestingPriority aux2 = new TestingPriority(false, 39, new Date(), servicioPersona.buscar("402-1409395-3"), servicioModuloPrioritario.buscar("2"));
-        agregarTesting(aux2);
-        Sucursal sucursal = buscarSucursal("1");
-        sucursal.setPersonasDentro(20);
-        actualizarSucursal(sucursal);
+            TestingNormal aux = new TestingNormal(false, 100, new Date(), servicioModuloNormal.buscar("1"));
+            agregarTesting(aux);
+            TestingNormal aux1 = new TestingNormal(false, 100, new Date(), servicioModuloNormal.buscar("1"));
+            agregarTesting(aux1);
+
+            Persona persona = new Persona("402-1409395-3", "Daniel ", "", "P", "Moronta", "danielmoronta23@hotmail.com");
+            agregarPersona(persona);
 
 
-        //agregarUsuario
-        Usuario a = new Usuario("danielmoronta23@hotmail.com", "dmpACIACS", RolUsuario.Admintrador_Comercial, buscarEmpresa("1"));
-        agregarUsuario(a);
-        //agregarUsuario
-        Usuario root = new Usuario("administrador@ACIACIS.com", "rootACIACS", RolUsuario.Super_Admintrador, null);
-        agregarUsuario(root);
+            TestingPriority aux2 = new TestingPriority(false, 39, new Date(), servicioPersona.buscar("402-1409395-3"), servicioModuloPrioritario.buscar("2"));
+            agregarTesting(aux2);
+            Sucursal sucursal = buscarSucursal("1");
+            sucursal.setPersonasDentro(20);
+            actualizarSucursal(sucursal);
+
+
+            //agregarUsuario
+            Usuario a = new Usuario("danielmoronta23@hotmail.com", "dpmACIACS", RolUsuario.Admintrador_Comercial, buscarEmpresa("1"));
+            agregarUsuario(a);
+            //agregarUsuario
+            Usuario root = new Usuario("administrador@ACIACIS.com", "rootACIACS", RolUsuario.Super_Admintrador, null);
+            agregarUsuario(root);
+        }
     }
 
     private boolean agregarUsuario(Usuario a) {
         return servicioUsuario.crear(a);
     }
 
-    public EstadisticaVisitas pruebasRealizadasPorHora(String idSucursal) throws ParseException {
+    public EstadisticaVisitas pruebasRealizadasPorHora(String idSucursal, Date fecha) throws ParseException {
         int[] visitaNormalesAceptadas = new int[24];
         int visitaNormalesAceptadasTotal = 0;
         int[] visitaNormalesDenegadas = new int[24];
@@ -153,7 +156,7 @@ public class Controladora {
         int visitaPrioritariaDenegadaTotal = 0;
         DateFormat hourFormat = new SimpleDateFormat("HH");
         int i;
-        for (Testing t : pruebasRealizadasHoy(idSucursal)) {
+        for (Testing t : pruebasRealizadasHoy(idSucursal,fecha)) {
             i = Integer.parseInt(hourFormat.format(t.getFechaResgistro()));
             if (t instanceof TestingNormal) {
                 if (verificarTesting(t)) {
@@ -202,7 +205,7 @@ public class Controladora {
 
     }
 
-    public EstadisticaVisitas estadisticaVisitasPorMeses(String idSucursal) throws ParseException {
+    public EstadisticaVisitas estadisticaVisitasPorMeses(String idSucursal, Date fecha) throws ParseException {
         int[] visitaNormalesAceptadas = new int[12];
         int visitaNormalesAceptadasTotal = 0;
         int[] visitaNormalesDenegadas = new int[12];
@@ -213,7 +216,7 @@ public class Controladora {
         int visitaPrioritariaDenegadaTotal = 0;
         DateFormat hourFormat = new SimpleDateFormat("MM");
         int i;
-        for (Testing t : servicioSucursal.pruebasRealizadasPorMensuales(new Date(), idSucursal)) {
+        for (Testing t : servicioSucursal.pruebasRealizadasPorMensuales(fecha, idSucursal)) {
             i = Integer.parseInt(hourFormat.format(t.getFechaResgistro()));
             if (t instanceof TestingNormal) {
                 if (verificarTesting(t)) {

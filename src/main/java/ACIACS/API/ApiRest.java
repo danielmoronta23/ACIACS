@@ -8,6 +8,9 @@ import ACIACS.servicios.ServicioDtoSucursal;
 import ACIACS.util.ControladorBase;
 import io.javalin.Javalin;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,17 +30,27 @@ public class ApiRest extends ControladorBase {
                 after(ctx -> {
                     ctx.header("Content-Type", "application/json");
                 });
-                get("/visitasPorHora/:id", ctx -> {
-                    ctx.json(controladora.pruebasRealizadasPorHora(ctx.pathParam("id", String.class).get()));
+                get("/visitasPorHora/:id/:fecha", ctx -> {
+                    String fecha = ctx.pathParam("fecha", String.class).get();
+                    DateFormat fechaFormato = new SimpleDateFormat("yyyy-MM-dd");
+                    Date fechaF = fechaFormato.parse(fecha);
+                    ctx.json(controladora.pruebasRealizadasPorHora(ctx.pathParam("id", String.class).get(),fechaF));
                 });
-                get("/visitasPorMeses/:id", ctx -> {
-                    ctx.json(controladora.estadisticaVisitasPorMeses(ctx.pathParam("id", String.class).get()));
+                get("/visitasPorMeses/:id/:fecha", ctx -> {
+                    String fecha = ctx.pathParam("fecha", String.class).get();
+                    DateFormat fechaFormato = new SimpleDateFormat("yyyy-MM-dd");
+                    Date fechaF = fechaFormato.parse(fecha);
+                    ctx.json(controladora.estadisticaVisitasPorMeses(ctx.pathParam("id", String.class).get(), fechaF));
                 });
 
-                get("/estadisticas/:id", ctx -> {
+                get("/estadisticas/:id/:fecha", ctx -> {
                     Object[] estadisticas = new Object[4];
-                    estadisticas[0] = controladora.pruebasRealizadasPorHora(ctx.pathParam("id", String.class).get());
-                    estadisticas[1] = controladora.estadisticaVisitasPorMeses(ctx.pathParam("id", String.class).get());
+                    String fecha = ctx.pathParam("fecha", String.class).get();
+                    DateFormat fechaFormato = new SimpleDateFormat("yyyy-MM-dd");
+                    Date fechaF = fechaFormato.parse(fecha);
+                    System.out.println("\n FECHA "+fechaF+"\n");
+                    estadisticas[0] = controladora.pruebasRealizadasPorHora(ctx.pathParam("id", String.class).get(), fechaF);
+                    estadisticas[1] = controladora.estadisticaVisitasPorMeses(ctx.pathParam("id", String.class).get(),fechaF);
                     estadisticas[2] = controladora.cantidadDePersonaEnSucursal(ctx.pathParam("id", String.class).get());
                     Sucursal sucursal = controladora.buscarSucursal(ctx.pathParam("id", String.class).get());
                     if (sucursal != null) {
