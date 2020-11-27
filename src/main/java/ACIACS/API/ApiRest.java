@@ -3,6 +3,8 @@ package ACIACS.API;
 import ACIACS.DTO.DtoPersona;
 import ACIACS.encapsulaciones.Sucursal;
 import ACIACS.logica.Controladora;
+import ACIACS.servicios.ServicioDtoEmpresa;
+import ACIACS.servicios.ServicioDtoSucursal;
 import ACIACS.util.ControladorBase;
 import io.javalin.Javalin;
 
@@ -65,6 +67,12 @@ public class ApiRest extends ControladorBase {
                         modelo.put("capacidad", -1);
                     }
                     ctx.json(modelo);
+                });
+                get("/sucursalPorEmpresa/:id", ctx -> {
+                    ctx.json(new ServicioDtoSucursal().buscarSucursalesPorEmpresa(ctx.pathParam("id", String.class).get()));
+                });
+                get("/listaEmpresa", ctx -> {
+                    ctx.json(new ServicioDtoEmpresa().buscarTodos());
                 });
             });
         });
