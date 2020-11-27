@@ -3,6 +3,7 @@ package ACIACS.controladores;
 import ACIACS.encapsulaciones.*;
 import ACIACS.logica.Controladora;
 import ACIACS.servicios.ServicioModulo;
+import ACIACS.servicios.ServicioSucursal;
 import ACIACS.util.ControladorBase;
 import ACIACS.util.EstatusAcceso;
 import ACIACS.util.EstatusModulo;
@@ -280,15 +281,57 @@ public class ControladorPlantilla extends ControladorBase {
                     List<Modulo> listaModulo = new ArrayList<>();
                     listaModulo = new ServicioModulo().explorarTodo();
                     String info = "";
-                    if(estatus){
-                       info = "Se ha creado el modulo de forma sactifactoria!";
+                    if (estatus) {
+                        info = "Se ha creado el modulo de forma sactifactoria!";
                     }
-                    modelo.put("Info",info);
+                    modelo.put("Info", info);
                     modelo.put("listaModulo", listaModulo);
                     System.out.println("Entrando a root-confModulos");
                     ctx.render("/Visual/ConfModulos.html", modelo);
                 } else {
                     ctx.redirect("/login");
+                }
+            });
+
+            get("/root-ConfSucursales", ctx -> {
+                if (ctx.sessionAttribute("usuario") != null) {
+                    //
+                    Usuario usuario = null;
+                    Map<String, Object> modelo = new HashMap<>();
+                    List<Sucursal> listaSucursal = new ArrayList<>();
+                    listaSucursal = new ServicioSucursal().explorarTodo();
+                    modelo.put("listaSucursal", listaSucursal);
+                    System.out.println("Entrando a root-ConfSucursales");
+                    ctx.render("/Visual/ConfSucursales.html", modelo);
+                } else {
+                    ctx.redirect("/login");
+                }
+            });
+            post("/root-ConfSucursales", ctx -> {
+                if (ctx.sessionAttribute("usuario") == null) {
+                    ctx.redirect("/login");
+                } else {
+                    Map<String, Object> modelo = new HashMap<>();
+                    String empresa = ctx.formParam("empresa");
+                    String dirrecion = ctx.formParam("dirrecion");
+                    String capacidad = ctx.formParam("capacidad");
+                    Empresa auxEmpresa = null;
+                    Boolean estatus = false;
+                    if (empresa != null) {
+                        auxEmpresa = Controladora.getControladora().buscarEmpresa(empresa);
+                    }
+                    if (auxEmpresa != null) {
+                        if (dirrecion != null && capacidad != null) {
+                            Sucursal sucursal = new Sucursal(new Ubicacion("", "", dirrecion), 0, Integer.parseInt(capacidad), auxEmpresa);
+                            Controladora.getControladora().agregarSucursal(sucursal);
+
+                        }
+                    }
+                    List<Sucursal> listaSucursal = new ArrayList<>();
+                    listaSucursal = new ServicioSucursal().explorarTodo();
+                    modelo.put("listaSucursal", listaSucursal);
+                    System.out.println("Entrando a agregarSucursal root-ConfSucursales");
+                    ctx.render("/Visual/ConfSucursales.html", modelo);
                 }
             });
         });
