@@ -201,7 +201,7 @@ public class Controladora {
     }
 
     public boolean verificarTesting(Testing testing) {
-        if (testing.getTemperatura() > 38 || testing.getMascarilla() == false) {
+        if (testing.getTemperatura() > 39 || testing.getMascarilla() == false) {
             return false;
         }
         return true;
