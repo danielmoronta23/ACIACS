@@ -14,10 +14,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js"
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <script type="text/javascript" src="js/Maps.js" rel="script" crossorigin="anonymous"></script>
-    <script type="text/javascript"
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDM0AktslA-tpk4Khz7XFgErCM_VxF0mHM&callback=initMap&libraries=&v=weekly"
-            defer></script>
 
 
 </head>
@@ -93,8 +89,8 @@
                 </div>
             </div>
             <div class="sb-sidenav-footer">
-                <div class="small">Logeado como:</div>
-                ADMIN
+                <div class="small" >Logeado como:</div>
+                <b th:text="${User}"></b>
             </div>
         </nav>
     </div>
@@ -123,8 +119,17 @@
                             <div class="input-group">
 
                                 <div class="col-10 mb-2">
-                                    <input class="form-control shadow font-weight-bold" type="date" value="2020-12-26" id="date-input">
+                                   <input class="form-control shadow font-weight-bold" type="date" id="date-input"/>
                                 </div>
+
+                                <script>
+                                    let fecha = new Date();
+                                    let year = fecha.getUTCFullYear();
+                                    let month  = fecha.getUTCMonth()+1;
+                                    let day = fecha.getUTCDay();
+                                    document.getElementById("date-input").value = year+"/" +month+"/"+day;
+                                    console.log("Fecha Cargada")
+                                </script>
                             </div>
 
                         </div>
@@ -264,23 +269,6 @@
                 </div>
 
                 <br>
-                <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item active font-weight-bold">DATOS GENERALES DE LA EMPRESA</li>
-                </ol>
-
-
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card mb-4 shadow">
-                            <div class="card-header "><i class="material-icons align-middle">place</i><b
-                                    class="align-middle">Ubicacion de Sucursales</b>
-                            </div>
-                            <div class="card-body">
-                                <div id="map" class="map" onload="success()"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
 
             </div>
@@ -300,15 +288,6 @@
     </div>
 </div>
 
-<script>
-    let now = new Date();
-    let day = ("0" + now.getDate()).slice(-2);
-    let month = ("0" + (now.getMonth() + 2)).slice(-2);
-    let today = now.getFullYear()+"-"+(month)+"-"+(day) ;
-    $('#date-input').val(today)
-</script>
-
-
 
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
@@ -319,8 +298,5 @@
 <script src="assets/demo/chart-area-demo.js"></script>
 <script src="js/cargarGraficos.js"></script>
 <script src="assets/demo/chart-pie-demo.js"></script>
-<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
-<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
-<script src="assets/demo/datatables-demo.js"></script>
 </body>
 </html>
