@@ -5,14 +5,10 @@ import ACIACS.logica.Controladora;
 import ACIACS.servicios.ServicioEmpresa;
 import ACIACS.servicios.ServicioModulo;
 import ACIACS.servicios.ServicioSucursal;
-import ACIACS.util.ControladorBase;
-import ACIACS.util.EstatusAcceso;
-import ACIACS.util.EstatusModulo;
-import ACIACS.util.RolUsuario;
+import ACIACS.util.*;
 import io.javalin.Javalin;
 import io.javalin.plugin.rendering.JavalinRenderer;
 import io.javalin.plugin.rendering.template.JavalinThymeleaf;
-import javassist.expr.NewArray;
 
 import java.util.*;
 
@@ -88,9 +84,9 @@ public class ControladorPlantilla extends ControladorBase {
                     Map<String, Object> modelo = new HashMap<>();
                     System.out.println("Entrando a root");
                     modelo.put("totalModulos", new ServicioModulo().cantModulos());
-                    modelo.put("totalModulosNormalesActivos", new ServicioModulo().cantModulos(true,EstatusModulo.Activo));
-                    modelo.put("totalModulosPrioritarioActivos", new ServicioModulo().cantModulos(false,EstatusModulo.Activo));
-                    modelo.put("listaSucursal",new ServicioEmpresa().explorarTodo());
+                    modelo.put("totalModulosNormalesActivos", new ServicioModulo().cantModulos(true, EstatusModulo.Activo));
+                    modelo.put("totalModulosPrioritarioActivos", new ServicioModulo().cantModulos(false, EstatusModulo.Activo));
+                    modelo.put("listaSucursal", new ServicioEmpresa().explorarTodo());
                     ctx.render("/Visual/root.html", modelo);
                 });
             });
@@ -183,6 +179,7 @@ public class ControladorPlantilla extends ControladorBase {
 
             });
             post("/agregarPersona", ctx -> {
+                boolean estado = false;
                 System.out.println("\n Entrado a agregar Persona ...");
                 Usuario usuario = null;
                 Map<String, Object> modelo = new HashMap<>();
@@ -190,6 +187,7 @@ public class ControladorPlantilla extends ControladorBase {
                 String nombre = ctx.formParam("nombre");
                 String apellido = ctx.formParam("apellido");
                 String correo = ctx.formParam("correo");
+                String coreoEmail = null;
                 if (ctx.cookie("usuario") != null) {
                     usuario = Controladora.getControladora().buscarUsuario(ctx.cookie("usuario"));
                 }
@@ -197,11 +195,13 @@ public class ControladorPlantilla extends ControladorBase {
                     ListaDeAccesso listaDeAccesso;
                     Persona persona = Controladora.getControladora().buscarPersona(cedula);
                     if (persona != null) {
+                        // Ya la persona existe
                         Calendar calendar = Calendar.getInstance();
                         calendar.setTime(new Date());
                         calendar.add(Calendar.YEAR, 2);
                         listaDeAccesso = new ListaDeAccesso(persona, usuario.getEmpresa(), EstatusAcceso.Activo, new Date(), calendar.getTime());
-                        System.out.println("Se pudo agregar a la personas ? " + Controladora.getControladora().agregarListaDeAcceso(listaDeAccesso));
+                        estado = Controladora.getControladora().agregarListaDeAcceso(listaDeAccesso);
+                        coreoEmail = persona.getCorreo();
                     } else {
                         Controladora.getControladora().agregarPersona(new Persona(cedula, nombre, "", apellido, "", correo));
                         Persona persona1 = Controladora.getControladora().buscarPersona(cedula);
@@ -210,7 +210,21 @@ public class ControladorPlantilla extends ControladorBase {
                             calendar.setTime(new Date());
                             calendar.add(Calendar.YEAR, 2);
                             listaDeAccesso = new ListaDeAccesso(persona1, usuario.getEmpresa(), EstatusAcceso.Activo, new Date(), calendar.getTime());
-                            System.out.println("Se pudo agregar a la personas ? " + Controladora.getControladora().agregarListaDeAcceso(listaDeAccesso));
+                            estado = Controladora.getControladora().agregarListaDeAcceso(listaDeAccesso);
+                            if(estado){
+                                coreoEmail = persona1.getCorreo();
+                            }
+                        }
+                    }
+                    if (estado) {
+                        //Enviando QR...
+                        String asunto = "Ya eres una cliente prioritario. ";
+                        try {
+                            new EnviarMensajeUsandoJavamail().enviarMensaje(coreoEmail, asunto, mensajeHTML(),cedula);
+                            System.out.println("Se ha enviado el mensaje al correo electronico.");
+                        } catch (Exception  e) {
+                            System.out.println("NO SE PUDO ENVIAR EL MENSAJE...");
+                            e.printStackTrace();
                         }
                     }
                     ctx.redirect("/administar-PersonasPrioritarias");
@@ -348,5 +362,14 @@ public class ControladorPlantilla extends ControladorBase {
             });
         });
 
+    }
+    public static String mensajeHTML() {
+        /**
+         *  EL SRC se debe dejar igual como esta (src="cid:qr\). Pues el que se usa para colocar el QR
+         */
+        String mensaje = "";
+        mensaje = "<H1>A continuación QR de acceso de prioridad: </H1>";
+        mensaje += "<img alt='' width='240' height='240' src=\"cid:qr\">   </div>";
+        return mensaje;
     }
 }

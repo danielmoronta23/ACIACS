@@ -119,17 +119,8 @@
                             <div class="input-group">
 
                                 <div class="col-10 mb-2">
-                                   <input class="form-control shadow font-weight-bold" type="date" id="date-input"/>
+                                   <input class="form-control shadow font-weight-bold" type="date" id="date-input" value=""/>
                                 </div>
-
-                                <script>
-                                    let fecha = new Date();
-                                    let year = fecha.getUTCFullYear();
-                                    let month  = fecha.getUTCMonth()+1;
-                                    let day = fecha.getUTCDay();
-                                    document.getElementById("date-input").value = year+"/" +month+"/"+day;
-                                    console.log("Fecha Cargada")
-                                </script>
                             </div>
 
                         </div>

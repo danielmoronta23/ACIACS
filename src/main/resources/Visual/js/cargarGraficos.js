@@ -7,19 +7,26 @@ function cargarGraficaVisitasPorHora(visitasNoramalesAceptadas, visitaNormalesDe
     var ctxPrioritario = document.getElementById("chartP");
     let maximoVisitasNormales = 5;
     let maximoVisitasPrioritaria = 5
+    let vNMax = 0;
+    let VPmax = 0;
     if (visitasTotales > 0) {
         if (Math.max.apply(null, visitasNoramalesAceptadas) > Math.max.apply(null, visitaNormalesDenegadas)) {
-            maximoVisitasNormales = Math.max.apply(null, visitasNoramalesAceptadas);
-        } else {
-            maximoVisitasNormales = Math.max.apply(null, visitaNormalesDenegadas);
-        }
 
+            vNMax = Math.max.apply(null, visitasNoramalesAceptadas);
+        } else {
+            vNMax = Math.max.apply(null, visitaNormalesDenegadas);
+        }
+        if (vNMax > maximoVisitasNormales) {
+            maximoVisitasNormales = vNMax;
+        }
         if (Math.max.apply(null, visitasPrioritariaAceptada) > Math.max.apply(null, visitasPrioritariaDenegada)) {
-            maximoVisitasPrioritaria = Math.max.apply(null, visitasPrioritariaAceptada);
+            VPmax = Math.max.apply(null, visitasPrioritariaAceptada);
         } else {
-            maximoVisitasPrioritaria = Math.max.apply(null, visitasPrioritariaAceptada);
+            VPmax = Math.max.apply(null, visitasPrioritariaAceptada);
         }
-
+        if (VPmax > maximoVisitasPrioritaria) {
+            maximoVisitasPrioritaria = VPmax;
+        }
     }
 
     let inicio = 5;
@@ -325,6 +332,12 @@ function cargarProgressBar(capacidad, dentro) {
 
 $(document).ready(function () {
     console.log("ready!");
+    let fecha = new Date();
+    let year = fecha.getUTCFullYear();
+    let month = fecha.getUTCMonth() + 1;
+    let day = fecha.getUTCDate();
+    document.getElementById("date-input").value = year + "-" + month + "-" + day;
+    console.log("Fecha Cargada...")
     actualizarDatos();
 });
 
