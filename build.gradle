@@ -50,6 +50,14 @@ dependencies {
     compile group: 'javax.mail', name: 'javax.mail-api', version: '1.6.2'
     compile group: 'com.sun.mail', name: 'javax.mail', version: '1.6.2'
     compile "org.simplejavamail:simple-java-mail:6.0.5"
+    //qr
+    // https://mvnrepository.com/artifact/com.google.zxing/zxing-parent
+    compile group: 'com.google.zxing', name: 'zxing-parent', version: '3.4.1', ext: 'pom'
+    // https://mvnrepository.com/artifact/com.google.zxing/core
+    compile group: 'com.google.zxing', name: 'core', version: '3.4.1'
+
+
+
 
 }
 //Agregando UTF 8 para las plantillas
