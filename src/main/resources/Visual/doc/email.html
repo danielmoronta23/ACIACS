@@ -1,132 +1,306 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <style>
-        :root {
-            --white: #fff;
-            --warning: #ffc107;
-            --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-            --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-        }
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="initial-scale=1.0">
+<meta name="format-detection" content="telephone=no">
+<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+<link href="http://fonts.googleapis.com/css?family=Oswald|Open+Sans&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+<style type="text/css">
+body {
+	width:100% !important;
+	-webkit-text-size-adjust:100%;
+	-ms-text-size-adjust:100%;
+	margin:0;
+	padding:0;
+	line-height:100%;
+}
+#outlook a {
+	padding:0;
+}
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-        }
-        *, ::before, ::after {
-            box-sizing: border-box;
-        }
+.ExternalClass,
+.ExternalClass p,
+.ExternalClass span,
+.ExternalClass font,
+.ExternalClass td,
+.ExternalClass div {
+	line-height:100%;
+    border-collapse: collapse;
+    
+}
+.tablereset {
+	margin:0 auto;
+	width:680px !important;
+	line-height:100% !important
+}
+img {
+	outline:none;
+	text-decoration:none;
+	border:none;
+	-ms-interpolation-mode:bicubic;
+    max-width: 100%!important;
+    margin: 0;
+    padding: 0;
+    display: block;
+}
+table td {
+	border-collapse:collapse;
+}
+table {
+	border-collapse:collapse; 
+    mso-table-lspace:0pt; 
+    mso-table-rspace:0pt;
+}
+   
+    td[class*=font-resize] {font-size: 140%!important}
+    td[style*="Oswald"] {font-family: 'Oswald', Arial, Helvetica, sans-serif!important}
+    td[style*="Open Sans"] {font-family: 'Open Sans', arial, sans-serif !important}    
 
-        .bg-custom {
-            background-color: #eceff1;
-        }
-
-        .bg-dark {
-            background-color: #343a40 !important;
-        }
-
-        .container-fluid {
-            width: 100%;
-            padding-right: 0.75rem;
-            padding-left: 0.75rem;
-            margin-right: auto;
-            margin-left: auto;
-        }
-
-        .card {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            min-width: 0;
-            word-wrap: break-word;
-            background-color: #fff;
-            background-clip: border-box;
-            border: 1px solid rgba(0, 0, 0, 0.125);
-            border-radius: 0.25rem;
-        }
-
-        .card-body {
-            flex: 1 1 auto;
-            min-height: 1px;
-            padding: 1.25rem;
-        }
-
-        .card-header {
-            padding: 0.75rem 1.25rem;
-            margin-bottom: 0;
-            background-color: rgba(0, 0, 0, 0.03);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.125);
-        }
-
-        .card-footer {
-            padding: 0.75rem 1.25rem;
-            background-color: rgba(0, 0, 0, 0.03);
-            border-top: 1px solid rgba(0, 0, 0, 0.125);
-        }
-
-        .text-center {
-            text-align: center !important;
-        }
-
-        .text-white {
-            color: #fff !important;
-        }
-
-        .text-warning {
-            color: #ffc107 !important;
-        }
-
-        .mt-4 {
-            margin-top: 1.5rem !important;
-        }
-
-        .col-lg-8 {
-            flex: 0 0 66.6666666667%;
-            max-width: 66.6666666667%;
-            position: relative;
-        }
-
-        h1, h2, h3, h4, h5, h6 {
-            margin-top: 0;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            line-height: 1.2;
-        }
-        a {
-            text-decoration: none;
-            background-color: transparent;
-        }
-
-        p {
-            margin-top: 0;
-            margin-bottom: 1rem;
-        }
-
-    </style>
+@media only screen and (max-width:680px) {
+	a[href="tel"],
+	a[href="sms"] {
+		text-decoration:none;
+		color:#ffffff;
+		pointer-events:none;
+		cursor:default;
+	}
+	tr.removemobile {
+		display:none;
+	}
+	table.removemobile {
+		display:none;
+	}
+	table.tablereset {
+		margin:0 auto;
+		width:440px !important;
+		line-height:100% !important
+	}
+	table[class*=devicewidth] {
+		width:440px!important;
+		text-align:center!important;
+        float: none!important;
+        display: table!important;
+	}
+	table[class*=devicewidth] .banner img {
+		width: 440px!important;
+	}
+	table[class*=devicewidthinner] {
+		width:400px!important;
+		text-align:center!important;
+        float: none!important;
+	}
+	table[class*=devicewidthinner] .banner img {
+		width: 400px!important;
+	}
+     table[class*=devicewidthinner3] {
+		width:173px!important;
+        float: none!important;
+	}
+	img[class*=logoImg] {
+		width:110px!important;
+		height:auto!important;
+	}
+}
+@media only screen and (max-width:519px) {
+    table.removemobile {
+		display:none;
+	}
+	table[class*=tablereset] {
+		margin:0 auto;
+		width:280px !important;
+		line-height:100% !important
+	}
+    img[class*=logoImg] {
+		width:100px!important;
+		height:auto!important;
+	}
+    td[class*=threecolumnphoto] {
+		padding-bottom: 20px;
+	}
+	table[class*=devicewidthright] {
+		width:160px!important;
+	}
+	table[class*=devicewidth] {
+		width:280px!important;
+        float: none!important;
+        display: table!important;        
+	}
+	table[class*=devicewidth] .banner img {
+		width: 280px!important;
+	}
+	table[class*=devicewidthinner] {
+		width:240px!important;
+        float: none!important;
+	}
+	table[class*=devicewidthinner] .banner img {
+		width: 240px!important;
+	}
+    table[class*=devicewidthinner3] {
+		width:173px!important;
+        float: none!important;
+	}
+    table[class*=button] {
+		float: none!important;
+	}
+	table[class*=button] td,
+	table[class*=button] td a {
+		font-size:12px!important;
+	}
+    td[class*=oswaldfont] {
+		font-size: large!important;
+	}
+}
+</style>
 </head>
-<body class="bg-custom">
-<div class="container-fluid col-lg-8">
-    <div class="card mt-1 bg-dark">
-        <div class="card-header mt-4 text-center bg-dark">
-            <img alt="" width="240" height="240"
-                 src="data:image/png;base64,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"/>
-        </div>
-        <div class="card-body text-center  text-white bg-dark">
-            <p>Mediante este C&oacute;digo QR podr&aacute;s aceder a nuestro local a traves del paso de prioridad.<br/>
-                Solo debes presentarlo antes el escaner del sistema y este te notificar&aacute; que podr&aacute;s
-                continuar para evaluar si posee mascarilla y una optima temperatura corporal.</p>
-            &nbsp;
-            <h2 class="text-center bg-dark">
-                <a class="text-warning" href="https://aciacs.azrael.studio/">
-                    <b>ACIACS</b>
-                </a>
-            </h2>
-            &nbsp;
-        </div>
-        <div class="card-footer text-center text-white bg-dark">
-            <h2><b>&iexcl;Gracias por Preferirnos!</b></h2>
-        </div>
-    </div>
+<body style="background-color:#ededed; margin:0; padding:0">
+<div style="background-color: #e7e6e6 ">
+	<br>
+	<table border="0" cellpadding="0" cellspacing="0" style="table-layout:fixed" width="100%">
+		<tr>
+			<td>
+
+				<!-- ciemny banner -->
+
+				<table class="tablereset" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="-moz-border-top-left-radius: 5px; -webkit-border-radius: 5px;">
+					<tr>
+						<td width="680">
+							<table class="devicewidth" align="center" cellspacing="0" cellpadding="0" border="0" width="680" bgcolor="#393939">
+								<tr>
+									<td width="680" align="center">
+										<table class="devicewidthinner" align="center" border="0" cellpadding="0" cellspacing="0" width="580">
+											<tr>
+												<td width="580" align="center">
+													<table class="devicewidthinner" align="left" border="0" cellpadding="0" cellspacing="0" width="290">
+														<tr>
+															<td width="520" align="center" style="font-size:1px;line-height:1px;" height="26" >&nbsp;</td>
+														</tr>
+														<tr>
+															<td width="520" align="center" style="font-family:Arial,Helvetica,sans-serif, 'Open Sans';font-size:28px;line-height:1.3em;color:#ffffff;font-weight:300;text-align:left;">ACIACS</td>
+														</tr>
+														<tr>
+															<td width="520" height="15" align="center" style="font-size:1px;line-height:1px;">&nbsp;</td>
+														</tr>
+														<tr>
+															<td width="520" align="center" style="font-family:Arial,Helvetica,sans-serif, 'Open Sans';font-size:17px;line-height:1.6em;color:#8b8b8b;font-weight:300;text-align:left;">Mediante este C&oacute;digo QR podr&aacute;s aceder a nuestro local a traves del paso de prioridad.<br/>
+																<br/>Solo debes presentarlo antes el escaner del sistema y este te notificar&aacute; que podr&aacute;s
+																continuar para evaluar si poses mascarilla y una optima temperatura corporal.</td>
+														</tr>
+														<tr>
+															<td width="520" height="30" align="center" style="font-size:1px;line-height:1px;">&nbsp;</td>
+														</tr>
+													</table>
+													<table class="devicewidthinner" align="right" border="0" cellpadding="0" cellspacing="0" width="290">
+														<tr>
+															<td width="290" align="center" style="font-size:1px;line-height:1px;" height="26" width="290">&nbsp;</td>
+														</tr>
+														<tr>
+															<td width="240" align="center">
+																<img  HEIGHT="290" src="data:image/png;base64,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"
+																	 alt="Green man" border="0" style="color:#000000; border:none;  display:block; font-size:22px;margin:0 auto;text-align:center;" width="290">
+																<br>
+																<br>
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+
+
+				<!-- koniec -->
+
+
+                <table class="tablereset" align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+					<tr>
+						<td width="680">
+							<table  class="devicewidth" align="center" cellspacing="0" cellpadding="0" border="0" width="680">
+								<tr>
+									<td align="center" style="font-size:1px; line-height:1px" height="32" width="680">&nbsp;</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+				<table class="tablereset" align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+					<tr>
+						<td width="680">
+							<table class="devicewidth" align="center" border="0" cellpadding="0" cellspacing="0" width="680">
+								<tr>
+									<td align="center" style="font-size:1px; line-height:1px" height="24" width="680">&nbsp;</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+				<table class="tablereset" align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+					<tr>
+						<td width="680">
+							<table class="devicewidth" align="center" border="0" cellpadding="0" cellspacing="0" width="680">
+								<tr>
+									<td width="680">
+										<table class="devicewidthinner" align="center" border="0" cellpadding="0" cellspacing="0" width="580">
+											<tr>
+												<td align="center" width="580" style="color:#8f8f8f; font-family:Arial, Helvetica, sans-serif; font-size:12px; line-height:1.4em">
+													Message sent by ACIACS: RD Navarrete, Santiago de los Caballeros.
+Phone Number. +44 12 3456 7890, email: support@aciacs.com, aciacs.azrael.studio.
+												</td>
+											</tr>
+										</table>
+									</td>
+									
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+				<table class="tablereset" align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+					<tr>
+						<td width="680">
+							<table class="devicewidth" align="center" cellspacing="0" cellpadding="0" border="0" width="680">
+								<tr>
+									<td align="center" style="font-size:1px; line-height:1px" height="32" width="680">&nbsp;</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+				<table class="tablereset" align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+					<tr>
+						<td width="680">
+							<table align="center" class="devicewidth" border="0" cellpadding="0" cellspacing="0" width="134">
+								<tr>
+									<td align="center" valign="middle" style="font-family:Arial, Helvetica, sans-serif; padding:10px 0 10px 0px" width="180">
+										<a href="https://www.pucmm.edu.do" style="color:#f1f1f1; font-size:10px; text-decoration:none" target="_blank" title="FreshMail.com">
+											<img class="logoImg" src="https://www.pucmm.edu.do/recursos/PublishingImages/logosimbolo/Marca%20PUCMM%20%28Color%29.png" alt="FreshMail" border="0" width="139" style="color:#000000; border:none; font-size:22px; display:block; height:auto; max-height:139px;">
+										</a>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+				<table class="tablereset" align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+					<tr>
+						<td width="680">
+							<table class="devicewidth" align="center" cellspacing="0" cellpadding="0" border="0" width="680">
+								<tr>
+									<td align="center" style="font-size:1px; line-height:1px" height="54" width="680">&nbsp;</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
 </div>
 </body>
 </html>
