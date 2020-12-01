@@ -334,8 +334,8 @@ $(document).ready(function () {
     console.log("ready!");
     let fecha = new Date();
     let year = fecha.getUTCFullYear();
-    let month = fecha.getUTCMonth() + 1;
-    let day = fecha.getUTCDate();
+    let month = fecha.getMonth() + 1;
+    let day = fecha.getDate();
     document.getElementById("date-input").value = year + "-" + month + "-" + day;
     console.log("Fecha Cargada...")
     actualizarDatos();
