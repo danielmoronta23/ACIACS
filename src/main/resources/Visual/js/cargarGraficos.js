@@ -22,7 +22,7 @@ function cargarGraficaVisitasPorHora(visitasNoramalesAceptadas, visitaNormalesDe
         if (Math.max.apply(null, visitasPrioritariaAceptada) > Math.max.apply(null, visitasPrioritariaDenegada)) {
             VPmax = Math.max.apply(null, visitasPrioritariaAceptada);
         } else {
-            VPmax = Math.max.apply(null, visitasPrioritariaAceptada);
+            VPmax = Math.max.apply(null, visitasPrioritariaDenegada);
         }
         if (VPmax > maximoVisitasPrioritaria) {
             maximoVisitasPrioritaria = VPmax;
@@ -103,7 +103,7 @@ function cargarGraficaVisitasPorHora(visitasNoramalesAceptadas, visitaNormalesDe
                     ticks: {
                         min: 0,
                         max: maximoVisitasNormales,
-                        maxTicksLimit: 5
+                        maxTicksLimit: 8
                     },
                     gridLines: {
                         color: "rgba(0, 0, 0, .125)",
@@ -166,7 +166,7 @@ function cargarGraficaVisitasPorHora(visitasNoramalesAceptadas, visitaNormalesDe
                     ticks: {
                         min: 0,
                         max: maximoVisitasPrioritaria,
-                        maxTicksLimit: 5
+                        maxTicksLimit: 8
                     },
                     gridLines: {
                         color: "rgba(0, 0, 0, .125)",
@@ -336,6 +336,9 @@ $(document).ready(function () {
     let year = fecha.getUTCFullYear();
     let month = fecha.getMonth() + 1;
     let day = fecha.getDate();
+    if(day<10){
+        day = '0'+day;
+    }
     document.getElementById("date-input").value = year + "-" + month + "-" + day;
     console.log("Fecha Cargada...")
     actualizarDatos();

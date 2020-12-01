@@ -172,10 +172,10 @@
                                                             </thead>
                                                             <tbody>
                                                             <tr  th:each="s : ${p.listaSucursal}">
-                                                                <td th:text="${p.id}"></td>
+                                                                <td th:text="${s.id}"></td>
                                                                 <td th:text="${s.ubicacion.dirrecion}"></td>
-                                                                <td th:text="${s.listaModulo.size}"></td>
                                                                 <td th:text="${s.capacidad}"></td>
+                                                                <td th:text="${s.listaModulo.size}"></td>
                                                                 <td th:text="${p.fechaIngreso}"></td>
                                                             </tr>
                                                             </tbody>
